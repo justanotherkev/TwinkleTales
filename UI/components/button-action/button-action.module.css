@@ -1,0 +1,74 @@
+.button {
+  text-decoration: none;
+  height: 100px;
+  width: 350px;
+  background-color: red; /* For browsers that do not support gradients */
+  background-image: linear-gradient(#ffe93f, rgb(215, 92, 21));
+  border: none;
+  border-radius: 50px;
+  color: black;
+  font-weight: bold;
+  padding-top: 25px;
+  padding-bottom: 50px;
+  text-align: center;
+  text-decoration: none;
+  /* display: inline-block; */
+  font-size: 46px;
+  font-family: "Sora, sans-serif";
+  margin: 10px 5px;
+  text-shadow: 2px 2px #c7c7c7;
+
+  /* opacity: 100; */
+  /* filter: alpha(opacity=15); */
+  position: fixed;
+  top: 300px;
+  left: 55%;
+}
+@media (max-width: 608px) {
+  .button {
+    height: 50px;
+    width: 250px;
+    padding-top: 20px;
+    padding-bottom: 50px;
+    padding-top: 25px;
+    padding-bottom: 50px;
+    font-size: 26px;
+    top: 263px;
+    left: 52%;
+  }
+}
+@media (max-width: 831px) {
+  .button {
+    height: 75px;
+    width: 300px;
+    padding-top: 20px;
+    padding-bottom: 50px;
+    padding-top: 25px;
+    padding-bottom: 50px;
+    font-size: 36px;
+    top: 263px;
+    left: 45%;
+  }
+}
+@media (max-width: 525px) {
+  .button {
+    height: 75px;
+    width: 250px;
+    padding-top: 25px;
+    padding-bottom: 50px;
+    font-size: 30px;
+    top: 263px;
+    left: 35%;
+  }
+}
+@media (max-width: 435px) {
+  .button {
+    height: 75px;
+    width: 200px;
+    padding-top: 25px;
+    padding-bottom: 50px;
+    font-size: 26px;
+    top: 263px;
+    left: 25%;
+  }
+}
