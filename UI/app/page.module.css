@@ -12,6 +12,7 @@
 	font-size: 120px;
 	font-family: "Rubik Bubbles", system-ui;
 	font-weight: 1;
+	transition: 1s;
 }
 
 .header_title span {
@@ -25,7 +26,6 @@
 	display: flex;
 	justify-content: space-around;
 	padding: 0px 50px;
-	border: red solid 1px;
 }
 
 .image {
@@ -36,19 +36,33 @@
 	width: 650px;
 	height: 650px;
 	position: absolute;
-	left: 0px;
+	left: 10%;
 	bottom: 0px;
+	transition: 1s;
 }
 
-@media (max-width: 1140px) {
+@media (max-width: 1130px) {
 	.header_title {
-		font-size: 120px;
+		font-size: 100px;
+		transition: 1s;
 	}
 }
 
-@media (max-width: 890px) {
+@media (max-width: 970px) {
 	.header_title {
-		font-size: 60px;
+		font-size: 80px;
+		transition: 1s;
+	}
+}
+
+@media (max-width: 810px) {
+	.header_title {
+		font-size: 80px;
+		display: flex;
+		flex-direction: column;
+		align-items: center;
+		gap: 0px;
+		transition: 1s;
 	}
 }
 
@@ -57,11 +71,26 @@
 	backdrop-filter: blur(3px);
 	border-radius: 15px;
 	position: absolute;
-	right: 0px;
+	right: 15%;
 	bottom: 20px;
 	width: 400px;
 	height: 500px;
 	padding: 50px 10px;
+	transition: 1s;
+}
+
+@media (max-width: 1435px) {
+	.get_started {
+		right: auto;
+		left: auto;
+		transition: 1s;
+	}
+
+	.image {
+		opacity: 0;
+		left: -5px;
+		transition: 1s;
+	}
 }
 
 .get_started_text h2 {
@@ -73,5 +102,4 @@
 .get_started_text h2,
 .get_started_text p {
 	text-align: center;
-	border: red 1px solid;
 }
