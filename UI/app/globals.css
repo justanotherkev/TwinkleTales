@@ -7,7 +7,7 @@ html, body {
 
 
 body {
-	background-image: url(../public/B1.jpg);
+	background-image: url(../public/background.jpg);
 	background-attachment: fixed;
 	background-repeat: no-repeat;
 	background-size: cover;
