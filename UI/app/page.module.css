@@ -1,12 +1,15 @@
 .home {
 	display: flex;
 	flex-direction: column;
-	justify-content: center;
+	justify-content: space-between;
 	align-items: center;
+	width: 100%;
+	height: 100%;
 }
 
 .header_title {
-	margin: 0;
+	border: green 1px solid;
+	margin: 30px 0 0 0;
 	display: flex;
 	gap: 20px;
 	font-size: 120px;
@@ -16,8 +19,7 @@
 }
 
 .header_title span {
-	letter-spacing: 10px;
-	background-image: linear-gradient(to bottom, #fcf010, #b86507);
+	background-image: linear-gradient(to bottom, #fcf010, #c9410c);
 	background-clip: text;
 	color: transparent;
 }
@@ -25,7 +27,9 @@
 .body {
 	display: flex;
 	justify-content: space-around;
-	padding: 0px 50px;
+	align-items: center;
+	gap: 40px;
+	border: yellow 1px solid;
 }
 
 .image {
@@ -35,71 +39,210 @@
 	background-size: contain;
 	width: 650px;
 	height: 650px;
-	position: absolute;
-	left: 10%;
-	bottom: 0px;
+	transition: 1s;
+}
+
+.get_started {
+	display: flex;
+	flex-direction: column;
+	justify-content: center;
+	gap: 30px;
+	align-items: center;
+	background-color: rgba(255, 255, 255, 0.486);
+	backdrop-filter: blur(3px);
+	border-radius: 15px;
+	right: 15%;
+	bottom: 40px;
+	width: 410px;
+	height: 530px;
+	padding: 20px 10px;
 	transition: 1s;
 }
 
 @media (max-width: 1130px) {
 	.header_title {
 		font-size: 100px;
-		transition: 1s;
+	}
+
+	.body {
+		justify-content: center;
+		gap: 0px;
+	}
+
+	.home {
+		justify-content: space-around;
+	}
+
+	.image {
+		opacity: 0;
+		transform: translateX(-300px);
+		width: 0;
+		height: 0;
 	}
 }
 
-@media (max-width: 970px) {
-	.header_title {
-		font-size: 80px;
-		transition: 1s;
-	}
-}
-
-@media (max-width: 810px) {
+@media (max-width: 850px) {
 	.header_title {
 		font-size: 80px;
 		display: flex;
 		flex-direction: column;
 		align-items: center;
 		gap: 0px;
-		transition: 1s;
+	}
+
+	.image {
+		height: 560px;
 	}
 }
 
-.get_started {
-	background-color: rgba(255, 255, 255, 0.486);
-	backdrop-filter: blur(3px);
-	border-radius: 15px;
-	position: absolute;
-	right: 15%;
-	bottom: 20px;
-	width: 400px;
-	height: 500px;
-	padding: 50px 10px;
-	transition: 1s;
+/* --- MOBILE RESPONSIVE --- */
+/* Phone width */
+@media (max-width: 455px) {
+	.get_started {
+		width: 90%;
+	}
+
+	.header_title {
+		font-size: 70px;
+	}
 }
 
-@media (max-width: 1435px) {
+/* Phone height */
+@media (max-height: 740px) {
 	.get_started {
-		right: auto;
-		left: auto;
-		transition: 1s;
+		height: 400px;
+	}
+
+	.body {
+		height: 90%;
+	}
+}
+
+/* Tablet width */
+/* @media (max-width: 1024px) {
+	.header_title {
+		font-size: ;
+	}
+} */
+
+/* Tablet height */
+/* @media (max-height: 1368px) {
+	.get_started {
+		height: 80%;
+	}
+
+	.body {
+		height: 50%;
+	}
+} */
+
+@media (max-height: 800px) {
+	.get_started {
+		height: 80%;
+	}
+
+	.body {
+		height: 50%;
+	}
+}
+
+@media (max-height: 932px) {
+	.get_started {
+	}
+}
+
+/* @media (max-width: 540px) and (max-height: 740px) {
+	.header_title {
+		font-size: 75px;
+	}
+
+	.body {
+		height: 450px;
+	}
+
+	.get_started {
+		height: 390px;
+	}
+} */
+
+/* @media (max-height: 725px) {
+	.get_started {
+		height: 360px;
+		right: calc(50% - 200px);
+		gap: 0px;
 	}
 
 	.image {
 		opacity: 0;
-		left: -5px;
-		transition: 1s;
 	}
+} */
+
+/* @media (max-height: 610px) {
+	.get_started {
+		position: relative;
+		transition: none;
+		margin-top: 40px;
+	}
+} */
+
+/* @media (max-width: 375px) {
+	.header_title {
+		font-size: 50px;
+	}
+
+	.get_started {
+		width: 350px;
+		position: relative;
+		transition: none;
+		margin-top: 40px;
+	}
+} */
+
+.get_started_text {
+	/* border: red 1px solid; */
+}
+
+.get_started_actions {
+	/* border: blue 1px solid; */
+	display: flex;
+	flex-direction: column;
+	align-items: center;
+	padding-top: 25px;
+	gap: 35px;
+	/* height: 70%; */
 }
 
 .get_started_text h2 {
-	font-size: 50px;
+	font-size: 55px;
 	font-family: "Sora", sans-serif;
 	font-weight: 500;
+	margin: 0;
+}
+
+.get_started_text p {
+	letter-spacing: 2px;
 }
 
 .get_started_text h2,
 .get_started_text p {
 	text-align: center;
+}
+
+.link {
+	text-decoration: none;
+	font-family: "Sora", sans-serif;
+	color: black;
+	font-size: 32px;
+	letter-spacing: 2px;
+}
+
+.link_button {
+	display: flex;
+	justify-content: center;
+	align-items: center;
+	height: 60px;
+	width: 325px;
+	border-radius: 20px;
+	box-shadow: black 0px 5px 7px;
+	background: linear-gradient(to bottom, #fff863, #e45820);
 }
