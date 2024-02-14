@@ -1,20 +1,11 @@
-// import sound from "../public/welcome_background_music.mp3";
+import HeaderTitle from "@/components/header-title/header-title";
 import s from "./page.module.css";
 import Link from "next/link";
 
 export default function Home() {
-	// function play() {
-	// 	new Audio(sound).play();
-	// }
-
-	// play();
-
 	return (
 		<div className={s.home}>
-			<h1 className={s.header_title}>
-				<span>TWINKLE</span>
-				<span>TALES</span>
-			</h1>
+			<HeaderTitle />
 			<div className={s.body}>
 				<div className={s.image}></div>
 
@@ -39,3 +30,10 @@ export default function Home() {
 		</div>
 	);
 }
+
+// import sound from "../public/welcome_background_music.mp3";
+
+// function play() {
+// new Audio(sound).play();
+// }
+// play();
