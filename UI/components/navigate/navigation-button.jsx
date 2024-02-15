@@ -5,14 +5,14 @@ import Link from "next/link";
 import React from "react";
 import s from "./navigate.module.css";
 
-export default function ButtonNavigation() {
-  return (
-    <div>
-      <button className={s.button}>
-        <Link className={s.buttonText} href="../../login">
-          Go back
-        </Link>
-      </button>
-    </div>
-  );
+export default function ButtonNavigation(props) {
+	return (
+		<div>
+			<button className={s.button}>
+				<Link className={s.buttonText} href="../../login">
+					{props.name}
+				</Link>
+			</button>
+		</div>
+	);
 }
