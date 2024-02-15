@@ -1,8 +1,8 @@
 .button {
   text-decoration: none;
   height: 100px;
-  width: 350px;
-  background-color: red; /* For browsers that do not support gradients */
+  width: 370px;
+  background-color: red;
   background-image: linear-gradient(#ffe93f, rgb(215, 92, 21));
   border: none;
   border-radius: 50px;
@@ -11,10 +11,9 @@
   padding-top: 25px;
   padding-bottom: 50px;
   text-align: center;
-  text-decoration: none;
   /* display: inline-block; */
   font-size: 46px;
-  font-family: "Sora, sans-serif";
+  font-family: "Sora", sans-serif;
   margin: 10px 5px;
   text-shadow: 2px 2px #c7c7c7;
 

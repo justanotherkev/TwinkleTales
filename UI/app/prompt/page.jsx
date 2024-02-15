@@ -6,9 +6,9 @@ import Image from "next/image";
 export default function Prompt() {
   return (
     <div>
-      <Button />
-      <ButtonNavigation />
-      <Image className={s.image} />
+      <Button text="Tap to Speak" />
+      <ButtonNavigation text="Go Back" />
+      <div className={s.image}></div>
     </div>
   );
 }

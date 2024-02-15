@@ -6,16 +6,16 @@ import "./imports.css";
 const inter = Inter({ subsets: ["latin"] });
 
 export const metadata = {
-	title: "TwinkleTales",
-	description: "A story generating application for kids",
+  title: "TwinkleTales",
+  description: "A story generating application for kids",
 };
 
 export default function RootLayout({ children }) {
-	return (
-		<ClerkProvider>
-			<html lang="en">
-				<body className={inter.className}>{children}</body>
-			</html>
-		</ClerkProvider>
-	);
+  return (
+    <ClerkProvider>
+      <html lang="en">
+        <body className={inter.className}>{children}</body>
+      </html>
+    </ClerkProvider>
+  );
 }

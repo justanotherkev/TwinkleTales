@@ -1,12 +1,12 @@
 "use client";
 import s from "./button-action.module.css";
 
-export default function ButtonAction() {
+export default function ButtonAction(props) {
   const handleClick = () => {};
   return (
     <>
       <button className={s.button} onClick={handleClick}>
-        Tap to Speak
+        {props.text}
       </button>
     </>
   );
