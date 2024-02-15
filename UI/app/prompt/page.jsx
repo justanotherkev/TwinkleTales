@@ -12,3 +12,5 @@ export default function Prompt() {
     </div>
   );
 }
+
+<Button text={"Home"} />;
