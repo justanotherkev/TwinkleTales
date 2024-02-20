@@ -11,3 +11,77 @@
   transition: 1s;
   z-index: 1;
 }
+@media (max-width: 1130px) {
+  .image {
+    background-size: contain;
+    width: 650px;
+    height: 650px;
+    position: relative;
+    left: 10%;
+    bottom: 0px;
+    z-index: 1;
+  }
+}
+
+@media (max-width: 850px) {
+  .image {
+    background-size: contain;
+    width: 650px;
+    height: 650px;
+    position: relative;
+    left: 10%;
+    bottom: 0px;
+    z-index: 1;
+  }
+}
+
+/* --- MOBILE RESPONSIVE --- */
+/* Phone width */
+@media (max-width: 455px) {
+  .image {
+    background-size: contain;
+    width: 650px;
+    height: 650px;
+    position: relative;
+    left: 10%;
+    bottom: 0px;
+    z-index: 1;
+  }
+}
+
+/* Phone height */
+@media (max-height: 740px) {
+  .image {
+    background-size: contain;
+    width: 650px;
+    height: 650px;
+    position: relative;
+    left: 10%;
+    bottom: 0px;
+    z-index: 1;
+  }
+}
+
+@media (max-height: 800px) {
+  .image {
+    background-size: contain;
+    width: 650px;
+    height: 650px;
+    position: relative;
+    left: 10%;
+    bottom: 0px;
+    z-index: 1;
+  }
+}
+
+@media (max-height: 800px) and (max-width: 1280px) {
+  .image {
+    background-size: contain;
+    width: 650px;
+    height: 650px;
+    position: relative;
+    left: 10%;
+    bottom: 0px;
+    z-index: 1;
+  }
+}

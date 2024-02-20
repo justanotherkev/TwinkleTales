@@ -16,14 +16,119 @@
   font-family: "Sora", sans-serif;
   margin: 10px 5px;
   text-shadow: 2px 2px #c7c7c7;
-
   /* opacity: 100; */
   /* filter: alpha(opacity=15); */
   position: fixed;
-  top: 300px;
+  top: 350px;
   left: 55%;
 }
-@media (max-width: 608px) {
+
+@media (max-width: 1130px) {
+  .button {
+    height: 100px;
+    width: 370px;
+    border-radius: 50px;
+    padding-top: 25px;
+    padding-bottom: 50px;
+    text-align: center;
+    font-size: 40px;
+    margin: 10px 5px;
+    text-shadow: 2px 2px #c7c7c7;
+    position: fixed;
+    top: 350px;
+    left: 55%;
+  }
+}
+
+@media (max-width: 850px) {
+  .button {
+    height: 100px;
+    width: 370px;
+    border-radius: 50px;
+    padding-top: 25px;
+    padding-bottom: 50px;
+    text-align: center;
+    font-size: 46px;
+    margin: 10px 5px;
+    text-shadow: 2px 2px #c7c7c7;
+    position: fixed;
+    top: 350px;
+    left: 55%;
+  }
+}
+
+/* --- MOBILE RESPONSIVE --- */
+/* Phone width */
+@media (max-width: 455px) {
+  .button {
+    height: 100px;
+    width: 370px;
+    border-radius: 50px;
+    padding-top: 25px;
+    padding-bottom: 50px;
+    text-align: center;
+    font-size: 46px;
+    margin: 10px 5px;
+    text-shadow: 2px 2px #c7c7c7;
+    position: fixed;
+    top: 350px;
+    left: 55%;
+  }
+}
+
+/* Phone height */
+@media (max-height: 740px) {
+  .button {
+    height: 100px;
+    width: 370px;
+    border-radius: 50px;
+    padding-top: 25px;
+    padding-bottom: 50px;
+    text-align: center;
+    font-size: 46px;
+    margin: 10px 5px;
+    text-shadow: 2px 2px #c7c7c7;
+    position: fixed;
+    top: 350px;
+    left: 55%;
+  }
+}
+
+@media (max-height: 800px) {
+  .button {
+    height: 100px;
+    width: 370px;
+    border-radius: 50px;
+    padding-top: 25px;
+    padding-bottom: 50px;
+    text-align: center;
+    font-size: 46px;
+    margin: 10px 5px;
+    text-shadow: 2px 2px #c7c7c7;
+    position: fixed;
+    top: 350px;
+    left: 55%;
+  }
+}
+
+@media (max-height: 800px) and (max-width: 1280px) {
+  .button {
+    height: 100px;
+    width: 370px;
+    border-radius: 50px;
+    padding-top: 25px;
+    padding-bottom: 50px;
+    text-align: center;
+    font-size: 46px;
+    margin: 10px 5px;
+    text-shadow: 2px 2px #c7c7c7;
+    position: fixed;
+    top: 350px;
+    left: 55%;
+  }
+}
+
+/* @media (max-width: 608px) {
   .button {
     height: 50px;
     width: 250px;
@@ -70,4 +175,4 @@
     top: 263px;
     left: 25%;
   }
-}
+} */
