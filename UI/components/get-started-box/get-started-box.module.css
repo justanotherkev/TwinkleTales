@@ -1,0 +1,66 @@
+
+
+.get_started_box {
+	display: flex;
+	flex-direction: column;
+	justify-content: center;
+	gap: 30px;
+	align-items: center;
+	background-color: rgba(255, 255, 255, 0.486);
+	backdrop-filter: blur(3px);
+	border-radius: 15px;
+	right: 15%;
+	bottom: 40px;
+	width: 410px;
+	height: 530px;
+	padding: 20px 10px;
+	transition: 1s;
+}
+
+/* --- MOBILE RESPONSIVE --- */
+/* Phone width */
+@media (max-width: 455px) {
+	.get_started_box {
+		width: 90%;
+	}
+}
+
+/* Phone height */
+@media (max-height: 740px) {
+	.get_started_box {
+		height: 400px;
+	}
+}
+
+@media (max-height: 800px) {
+	.get_started_box {
+		height: 90%;
+		gap: 0px;
+	}
+}
+
+.actions {
+	/* border: blue 1px solid; */
+	display: flex;
+	flex-direction: column;
+	align-items: center;
+	padding-top: 25px;
+	gap: 35px;
+	/* height: 70%; */
+}
+
+.text h2 {
+	font-size: 55px;
+	font-weight: 500;
+	margin: 0;
+}
+
+.text p {
+	letter-spacing: 2px;
+}
+
+.text h2,
+.text p {
+	font-family: "Sora", sans-serif;
+	text-align: center;
+}
