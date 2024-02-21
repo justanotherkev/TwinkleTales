@@ -1,12 +1,8 @@
 import { SignUp } from "@clerk/nextjs";
-import s from "./page.module.css";
-import HeaderTitle from "@/components/header-title/header-title";
+import PageComponent from "@/components/page-component/page-component";
 
 export default function Login() {
-  return (
-    <div className={s.login}>
-      <HeaderTitle />
-      <SignUp />
-    </div>
-  );
+	return (
+		<PageComponent src={"/login-signup-img.png"} form_component={<SignUp />} />
+	);
 }
