@@ -1,0 +1,137 @@
+.button {
+  height: 50px;
+  width: 150px;
+  background-color: red;
+  background-image: linear-gradient(#ffe93f, rgb(215, 92, 21));
+  border: none;
+  border-radius: 35px;
+  color: black;
+  padding-top: 20px;
+  padding-bottom: px;
+  padding-left: 30px;
+  /* display: inline-block; */
+  margin: 10px 5px;
+  text-shadow: 2px 2px #c7c7c7;
+}
+.buttonText {
+  text-decoration: none;
+  color: black;
+  font-family: "Sora", sans-serif;
+  font-weight: bold;
+  font-size: 26px;
+}
+@media (max-width: 1130px) {
+  .button {
+    height: 50px;
+    width: 150px;
+    border-radius: 35px;
+    padding-top: 20px;
+    padding-bottom: px;
+    padding-left: 30px;
+    /* display: inline-block; */
+    margin: 10px 5px;
+    text-shadow: 2px 2px #c7c7c7;
+  }
+  .buttonText {
+    font-size: 26px;
+  }
+}
+
+@media (max-width: 850px) {
+  .button {
+    height: 50px;
+    width: 150px;
+    border-radius: 35px;
+    padding-top: 20px;
+    padding-bottom: px;
+    padding-left: 30px;
+    /* display: inline-block; */
+    margin: 10px 5px;
+    text-shadow: 2px 2px #c7c7c7;
+  }
+  .buttonText {
+    font-size: 26px;
+  }
+}
+
+/* --- MOBILE RESPONSIVE --- */
+/* Phone width */
+@media (max-width: 455px) {
+  .button {
+    height: 50px;
+    width: 150px;
+    border-radius: 35px;
+    padding-top: 20px;
+    padding-bottom: px;
+    padding-left: 30px;
+    /* display: inline-block; */
+    margin: 10px 5px;
+    text-shadow: 2px 2px #c7c7c7;
+  }
+  .buttonText {
+    font-size: 26px;
+  }
+}
+
+/* Phone height */
+@media (max-height: 740px) {
+  .button {
+    height: 50px;
+    width: 150px;
+    border-radius: 35px;
+    padding-top: 20px;
+    padding-bottom: px;
+    padding-left: 30px;
+    /* display: inline-block; */
+    margin: 10px 5px;
+    text-shadow: 2px 2px #c7c7c7;
+  }
+  .buttonText {
+    font-size: 26px;
+  }
+}
+
+@media (max-height: 800px) {
+  .button {
+    height: 50px;
+    width: 150px;
+    border-radius: 35px;
+    padding-top: 20px;
+    padding-bottom: px;
+    padding-left: 30px;
+    /* display: inline-block; */
+    margin: 10px 5px;
+    text-shadow: 2px 2px #c7c7c7;
+  }
+  .buttonText {
+    font-size: 26px;
+  }
+}
+
+@media (max-height: 800px) and (max-width: 1280px) {
+  .button {
+    height: 50px;
+    width: 150px;
+    border-radius: 35px;
+    padding-top: 20px;
+    padding-bottom: px;
+    padding-left: 30px;
+    /* display: inline-block; */
+    margin: 10px 5px;
+    text-shadow: 2px 2px #c7c7c7;
+  }
+  .buttonText {
+    font-size: 26px;
+  }
+}
+/* @media (max-width: 772px) {
+  .button {
+    height: 20px;
+    width: 100px;
+    padding-top: 20px;
+    padding-bottom: 50px;
+  }
+  .buttonText {
+    font-size: 20px;
+  }
+} */

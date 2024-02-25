@@ -25,18 +25,18 @@
 
 @media (max-width: 1130px) {
   .button {
-    height: 100px;
-    width: 370px;
+    height: 90px;
+    width: 310px;
     border-radius: 50px;
     padding-top: 25px;
-    padding-bottom: 50px;
+    padding-bottom: 45px;
     text-align: center;
-    font-size: 40px;
-    margin: 10px 5px;
+    font-size: 35px;
+    margin: 5px 5px;
     text-shadow: 2px 2px #c7c7c7;
     position: fixed;
     top: 350px;
-    left: 55%;
+    left: 62%;
   }
 }
 

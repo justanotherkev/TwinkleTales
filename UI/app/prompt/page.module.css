@@ -11,11 +11,12 @@
   transition: 1s;
   z-index: 1;
 }
+
 @media (max-width: 1130px) {
   .image {
     background-size: contain;
-    width: 650px;
-    height: 650px;
+    width: 625px;
+    height: 625px;
     position: relative;
     left: 10%;
     bottom: 0px;
@@ -26,10 +27,11 @@
 @media (max-width: 850px) {
   .image {
     background-size: contain;
-    width: 650px;
-    height: 650px;
+    width: 500px;
+    height: 500px;
     position: relative;
-    left: 10%;
+    left: 2%;
+    top: 90px;
     bottom: 0px;
     z-index: 1;
   }
@@ -40,10 +42,10 @@
 @media (max-width: 455px) {
   .image {
     background-size: contain;
-    width: 650px;
-    height: 650px;
+    width: 600px;
+    height: 600px;
     position: relative;
-    left: 10%;
+    /* left: 0%; */
     bottom: 0px;
     z-index: 1;
   }

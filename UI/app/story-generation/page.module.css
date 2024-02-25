@@ -11,6 +11,9 @@
   transition: 1s;
   z-index: 1;
 }
+.box {
+  display: flex;
+}
 @media (max-width: 1130px) {
   .image {
     background-size: contain;
