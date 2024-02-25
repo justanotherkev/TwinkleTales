@@ -1,5 +1,3 @@
-
-
 .get_started_box {
 	display: flex;
 	flex-direction: column;
@@ -15,28 +13,6 @@
 	height: 530px;
 	padding: 20px 10px;
 	transition: 1s;
-}
-
-/* --- MOBILE RESPONSIVE --- */
-/* Phone width */
-@media (max-width: 455px) {
-	.get_started_box {
-		width: 90%;
-	}
-}
-
-/* Phone height */
-@media (max-height: 740px) {
-	.get_started_box {
-		height: 400px;
-	}
-}
-
-@media (max-height: 800px) {
-	.get_started_box {
-		height: 90%;
-		gap: 0px;
-	}
 }
 
 .actions {
@@ -63,4 +39,35 @@
 .text p {
 	font-family: "Sora", sans-serif;
 	text-align: center;
+}
+
+/* --- MOBILE RESPONSIVE --- */
+
+/* @media (max-height: 740px) {
+	.get_started_box {
+		height: 400px;
+	}
+} */
+
+/* @media (max-height: 800px) {
+	.get_started_box {
+		height: 90%;
+		gap: 0px;
+	}
+} */
+
+@media (max-width: 360px) {
+	.get_started_box {
+		width: 85%;
+	}
+}
+
+@media (max-width: 455px) {
+	.get_started_box {
+		width: 85%;
+	}
+
+	.text p {
+		padding: 0 10px;
+	}
 }
