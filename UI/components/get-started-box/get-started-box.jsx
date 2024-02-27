@@ -1,4 +1,4 @@
-import LoginSignupButton from "../login-signup-button/login-signup-button";
+import FormButton from "../form-button/form-button";
 import s from "./get-started-box.module.css";
 
 export default function GetStartedBox() {
@@ -10,8 +10,8 @@ export default function GetStartedBox() {
 			</div>
 
 			<div className={s.actions}>
-				<LoginSignupButton href={"./login"} name={"Login"} />
-				<LoginSignupButton href={"./sign-up"} name={"Sign Up"} />
+				<FormButton href={"./login"} name={"Login"} isNav={true} />
+				<FormButton href={"./sign-up"} name={"Sign Up"} isNav={true} />
 			</div>
 		</div>
 	);

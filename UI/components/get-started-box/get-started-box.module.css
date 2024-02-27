@@ -5,7 +5,7 @@
 	gap: 30px;
 	align-items: center;
 	background-color: rgba(255, 255, 255, 0.486);
-	backdrop-filter: blur(3px);
+	backdrop-filter: blur(12px);
 	border-radius: 15px;
 	right: 15%;
 	bottom: 40px;
@@ -63,10 +63,6 @@
 }
 
 @media (max-width: 455px) {
-	.get_started_box {
-		width: 85%;
-	}
-
 	.text p {
 		padding: 0 10px;
 	}
