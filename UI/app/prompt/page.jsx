@@ -1,17 +1,11 @@
-import Button from "../../components/button-action/button-action.jsx";
-import BackButton from "../../components/back-button/back-button.jsx";
-import s from "./page.module.css";
-// import Image from "next/image";
+import ButtonAction from "@/components/button-action/button-action";
+import PageComponent2 from "@/components/page-component-2/page-component-2.jsx";
 
 export default function Prompt() {
-  return (
-    <div className={s.body}>
-      <Button text="Tap to speak" />
-      <BackButton text="Go Back" />
-      <div className={s.image}></div>
-      <div className={s.backgroundImage}></div>
-    </div>
-  );
+	return (
+		<PageComponent2
+			src={"/story-prompt-img.png"}
+			component={<ButtonAction />}
+		/>
+	);
 }
-
-<Button text={"Home"} />;

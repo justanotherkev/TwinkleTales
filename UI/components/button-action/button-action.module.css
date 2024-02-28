@@ -1,178 +1,34 @@
-.button {
-  text-decoration: none;
-  height: 100px;
-  width: 370px;
-  background-color: red;
-  background-image: linear-gradient(#ffe93f, rgb(215, 92, 21));
-  border: none;
-  border-radius: 50px;
-  color: black;
-  font-weight: bold;
-  padding-top: 25px;
-  padding-bottom: 50px;
-  text-align: center;
-  /* display: inline-block; */
-  font-size: 46px;
-  font-family: "Sora", sans-serif;
-  margin: 10px 5px;
-  text-shadow: 2px 2px #c7c7c7;
-  /* opacity: 100; */
-  /* filter: alpha(opacity=15); */
-  position: fixed;
-  top: 350px;
-  left: 55%;
+.link {
+	background: none;
+	border: none;
+	text-decoration: none;
+	font-family: "Sora", sans-serif;
+	color: black;
+	font-size: 32px;
+	letter-spacing: 2px;
+	cursor: pointer;
 }
 
-@media (max-width: 1130px) {
-  .button {
-    height: 90px;
-    width: 310px;
-    border-radius: 50px;
-    padding-top: 25px;
-    padding-bottom: 45px;
-    text-align: center;
-    font-size: 35px;
-    margin: 5px 5px;
-    text-shadow: 2px 2px #c7c7c7;
-    position: fixed;
-    top: 350px;
-    left: 62%;
-  }
+.link_button {
+	display: flex;
+	justify-content: center;
+	align-items: center;
+	height: 120px;
+	width: 325px;
+	border-radius: 30px;
+	box-shadow: black 3px 7px 12px;
+	background: linear-gradient(to bottom, #fff863, #e45820);
+	transition: 0.2s;
 }
 
-@media (max-width: 850px) {
-  .button {
-    height: 100px;
-    width: 370px;
-    border-radius: 50px;
-    padding-top: 25px;
-    padding-bottom: 50px;
-    text-align: center;
-    font-size: 46px;
-    margin: 10px 5px;
-    text-shadow: 2px 2px #c7c7c7;
-    position: fixed;
-    top: 350px;
-    left: 55%;
-  }
+.link_button:hover {
+	background: linear-gradient(to bottom, #fef773 20%, #e45820);
+	color: white;
+	box-shadow: black 1px 1px 2px;
 }
 
-/* --- MOBILE RESPONSIVE --- */
-/* Phone width */
 @media (max-width: 455px) {
-  .button {
-    height: 100px;
-    width: 370px;
-    border-radius: 50px;
-    padding-top: 25px;
-    padding-bottom: 50px;
-    text-align: center;
-    font-size: 46px;
-    margin: 10px 5px;
-    text-shadow: 2px 2px #c7c7c7;
-    position: fixed;
-    top: 350px;
-    left: 55%;
-  }
+	.link_button {
+		width: 285px;
+	}
 }
-
-/* Phone height */
-@media (max-height: 740px) {
-  .button {
-    height: 100px;
-    width: 370px;
-    border-radius: 50px;
-    padding-top: 25px;
-    padding-bottom: 50px;
-    text-align: center;
-    font-size: 46px;
-    margin: 10px 5px;
-    text-shadow: 2px 2px #c7c7c7;
-    position: fixed;
-    top: 350px;
-    left: 55%;
-  }
-}
-
-@media (max-height: 800px) {
-  .button {
-    height: 100px;
-    width: 370px;
-    border-radius: 50px;
-    padding-top: 25px;
-    padding-bottom: 50px;
-    text-align: center;
-    font-size: 46px;
-    margin: 10px 5px;
-    text-shadow: 2px 2px #c7c7c7;
-    position: fixed;
-    top: 350px;
-    left: 55%;
-  }
-}
-
-@media (max-height: 800px) and (max-width: 1280px) {
-  .button {
-    height: 100px;
-    width: 370px;
-    border-radius: 50px;
-    padding-top: 25px;
-    padding-bottom: 50px;
-    text-align: center;
-    font-size: 46px;
-    margin: 10px 5px;
-    text-shadow: 2px 2px #c7c7c7;
-    position: fixed;
-    top: 350px;
-    left: 55%;
-  }
-}
-
-/* @media (max-width: 608px) {
-  .button {
-    height: 50px;
-    width: 250px;
-    padding-top: 20px;
-    padding-bottom: 50px;
-    padding-top: 25px;
-    padding-bottom: 50px;
-    font-size: 26px;
-    top: 263px;
-    left: 52%;
-  }
-}
-@media (max-width: 831px) {
-  .button {
-    height: 75px;
-    width: 300px;
-    padding-top: 20px;
-    padding-bottom: 50px;
-    padding-top: 25px;
-    padding-bottom: 50px;
-    font-size: 36px;
-    top: 263px;
-    left: 45%;
-  }
-}
-@media (max-width: 525px) {
-  .button {
-    height: 75px;
-    width: 250px;
-    padding-top: 25px;
-    padding-bottom: 50px;
-    font-size: 30px;
-    top: 263px;
-    left: 35%;
-  }
-}
-@media (max-width: 435px) {
-  .button {
-    height: 75px;
-    width: 200px;
-    padding-top: 25px;
-    padding-bottom: 50px;
-    font-size: 26px;
-    top: 263px;
-    left: 25%;
-  }
-} */
