@@ -21,23 +21,25 @@ def speak(text1):
 def speechToText():
     recognizer = stt.Recognizer()
     with stt.Microphone() as source:
-        badWords = ["sex","fuck","motherfucker"]
         print("speak now")
+        recognizer.adjust_for_ambient_noise(source)
         audio = recognizer.listen(source)
         answer1 = recognizer.recognize_google(audio)
-        if answer1 in badWords:
-            print("Please speak again with appropriate words")
-        else:
-            list.append(answer1)
-            print(list)
+        list.append(answer1)
+        print(list)
 
 #passing arguments into text to speech funtion and calling sppech to text funtion
-speak("what are the characters are in your story?")
-speechToText()
-speak("Where is the story taking place?")
-speechToText()
-speak("What is the weather like today?")
-speechToText()
-speak("what is your favourite sport?")
-speechToText()
+while True:
+    try:
+        speak("what are the characters are in your story?")
+        speechToText()
+        speak("Where is the story taking place?")
+        speechToText()
+        speak("What is the weather like today?")
+        speechToText()
+        speak("what is your favourite sport?")
+        speechToText()
+        break
+    except:
+        print("Sorry, I didn't understand")
 
