@@ -13,7 +13,7 @@ def speak(text1):
     tts = elevenlabs.generate(
         text = text1,
         voice= "Domi",
-        api_key = "ac764488fbfd187d77d484e08b31293a"
+        api_key ="ac764488fbfd187d77d484e08b31293a"
     )
     elevenlabs.play(tts)
 
@@ -29,17 +29,20 @@ def speechToText():
         print(list)
 
 #passing arguments into text to speech funtion and calling sppech to text funtion
-while True:
-    try:
-        speak("what are the characters are in your story?")
-        speechToText()
-        speak("Where is the story taking place?")
-        speechToText()
-        speak("What is the weather like today?")
-        speechToText()
-        speak("what is your favourite sport?")
-        speechToText()
-        break
-    except:
-        print("Sorry, I didn't understand")
+def main():
+    while True:
+        try:
+            speak("what are the characters are in your story?")
+            speechToText()
+            speak("Where is the story taking place?")
+            speechToText()
+            speak("What is the weather like today?")
+            speechToText()
+            speak("what is your favourite sport?")
+            speechToText()
+            break
+        except:
+            print("Sorry, I didn't understand")
 
+if __name__ == "__main__":
+    main()
