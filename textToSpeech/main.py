@@ -5,7 +5,6 @@ tts = pyttsx3.init()
 voices = tts.getProperty('voices')
 
 tts.setProperty('voice', voices[1].id)
-tts.setProperty('r
 
 tts.say("What are the characters are in your story?")
 tts.say("Where is the story taking place?")
