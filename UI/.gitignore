@@ -31,3 +31,8 @@ yarn-error.log*
 # typescript
 *.tsbuildinfo
 next-env.d.ts
+
+# TTS files
+misc.xml
+textToSpeech.iml
+vcs.xml
