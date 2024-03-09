@@ -2,22 +2,23 @@ import elevenlabs
 import speech_recognition as stt
 
 
-#to get an idea what are the available voices in elevenlabs
+# to get an idea what are the available voices in elevenlabs
 print(elevenlabs.voices())
 
-#text to speech
-#used Domi
-#taking parameters that includes the question
+# text to speech
+# used Domi
+# taking parameters that includes the question
 list = []
+
+
 def speak(text1):
     tts = elevenlabs.generate(
-        text = text1,
-        voice= "Domi",
-        api_key ="ac764488fbfd187d77d484e08b31293a"
+        text=text1, voice="Domi", api_key="ac764488fbfd187d77d484e08b31293a"
     )
     elevenlabs.play(tts)
 
-#converting speech to text
+
+# converting speech to text
 def speechToText():
     recognizer = stt.Recognizer()
     with stt.Microphone() as source:
@@ -28,7 +29,8 @@ def speechToText():
         list.append(answer1)
         print(list)
 
-#passing arguments into text to speech funtion and calling sppech to text funtion
+
+# passing arguments into text to speech funtion and calling sppech to text funtion
 def main():
     while True:
         try:
@@ -41,8 +43,13 @@ def main():
             speak("what is your favourite sport?")
             speechToText()
             break
-        except:
-            print("Sorry, I didn't understand")
+        except Exception as e:
+            print(f"Caught an exception: {e}")
+
 
 if __name__ == "__main__":
     main()
+
+
+
+# Caught an exception: ffplay from ffmpeg not found, necessary to play audio. On mac you can install it with 'brew install ffmpeg'. On linux and windows you can install it from https://ffmpeg.org/

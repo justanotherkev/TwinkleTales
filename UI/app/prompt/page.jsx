@@ -1,6 +1,6 @@
 "use client";
 
-import ButtonAction from "@/components/button-action/button-action";
+import ButtonStory from "@/components/button-story/button-story";
 import PageComponent2 from "@/components/page-component-2/page-component-2.jsx";
 import s from "./page.module.css";
 import { useState } from "react";
@@ -30,7 +30,7 @@ export default function Prompt() {
 					<div className={s.prompt} id="prompt">
 						{prompt}
 					</div>
-					<ButtonAction
+					<ButtonStory
 						setPrompt={setPrompt}
 						setAnswers={setAnswers}
 						setShowDisplay={setShowDisplay}

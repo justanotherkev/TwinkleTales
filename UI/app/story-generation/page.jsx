@@ -1,29 +1,29 @@
 "use client";
-import Button from "../../components/button-action/button-action.jsx";
-import s from "./page.module.css";
-import Image from "next/image";
 import React, { useState } from "react";
-import PageComponent from "../../components/page-component-2/page-component-2.jsx";
+import PageComponent2 from "../../components/page-component-2/page-component-2.jsx";
+import StoryImageBox from "@/components/story-image-box/story-image-box.jsx";
+import BackButton from "@/components/back-button/back-button.jsx";
+import { useRouter } from "next/navigation.js";
 
-export function story_box() {
-  return <div className="container"></div>;
+export default function StoryGeneration() {
+
+  const router = useRouter();
+
+  const handleRouting = () => {
+		router.push("/prompt");
+	};
+
+	const [imageSource, setImageSource] = useState();
+
+	return (
+		<PageComponent2
+			src={"/story-reading-img.png"}
+			component={
+				<>
+					<StoryImageBox src={imageSource} />
+					<BackButton handleRouting={handleRouting}/>
+				</>
+			}
+		/>
+	);
 }
-
-export default function story_generation() {
-  return (
-    <PageComponent
-      // src={"../../public/story-prompt-img.png"}
-      src={"/story-prompt-img.png"}
-      form_component={<story_box />}
-    />
-  );
-}
-// export default function StoryGeneration() {
-//   return (
-//     <div className={s.body}>
-//       <Button text="New Story" />
-//       <div className={s.image}></div>
-//     </div>
-
-//   );
-// }
