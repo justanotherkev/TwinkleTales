@@ -1,6 +1,6 @@
 "use client";
 import { useState } from "react";
-import s from "./button-action.module.css";
+import s from "./button-story.module.css";
 
 export default function ButtonAction(props) {
 	const [buttonText, setButtonText] = useState("Tell me a story");
