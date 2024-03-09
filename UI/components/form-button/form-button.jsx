@@ -10,7 +10,7 @@ export default function FormButton(props) {
 		);
 	} else {
 		return (
-			<button type="submit" onClick={props.onClick} className={s.link}>
+			<button type={props.type} onClick={props.onClick} className={s.link}>
 				<div className={s.link_button}>{props.name}</div>
 			</button>
 		);
