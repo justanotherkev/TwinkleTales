@@ -18,15 +18,25 @@ def download_image(image_url, directory, filename):
     else:
         print(f"Failed to load image from {image_url}")
 
+ending = "in a colourful children's story animation style with out any texts."
+
 prompts = [
-    "a crocodile reading a book 3d animated",
-    "a fox on a roof 3d",
-    "a swan in a lake 3d",
-    "a bunny eating carrots 3d",
-    "a bird is flying in the sky 3d"
+    # "The sky was a bright shade of blue, and fluffy clouds drifted lazily overhead."
+    # "Molly and Robbie loved to play catch with a soft ball made of leaves in the meadow."
+    # "One day, as they were playing catch, Robbie noticed that Molly's little mouse hole was looking a bit messy."
+    # "Molly, I think there's a storm coming, he said, concern evident in his voice."
+    # "They hurried back to Robbie's burrow, which was sturdier and more sheltered from the storm."
+    # "Thank you for helping me tidy up, Robbie, said Molly, her eyes shining with gratitude."
+    
+    f"The sky was a bright shade of blue, and fluffy clouds drifted lazily overhead {ending}",
+    f"Molly the mouse and Robbie the rabbit loved to play catch with a soft ball made of leaves {ending}",
+    f"One day, as they were playing catch, Robbie noticed that Molly's little mouse hole was looking a bit messy {ending}",
+    f"Molly, I think there's a storm coming, he said, concern evident in his voice {ending}",
+    f"They hurried back to Robbie's burrow, which was sturdier and more sheltered from the storm. children story book animation style.",
+    f"Thank you for helping me tidy up, Robbie, said Molly, her eyes shining with gratitude children story book animation style."
 ]
 
-directory = r"C:\Users\94768\OneDrive\Desktop\IIT\L5\SDGP\image-gen-react\image-gen-react\src\assets\images"  # Change this to your desired directory
+directory = r"E:\IIT studies\2 ND YEAR MATERIAL\SDGP\IMAGES"  # Change this to your desired directory
 
 for i, prompt in enumerate(prompts):
     output = replicate.run(
