@@ -8,7 +8,7 @@ export default function PageComponent2(props) {
 			{/* <HeaderTitle /> */}
 			<div className={s.body}>
 				<div className={s.image}>
-					<Image src={props.src} width={700} height={700} />
+					<Image src={props.src} width={750} height={750} />
 				</div>
 				<div className={s.form_box}>{props.component}</div>
 			</div>
