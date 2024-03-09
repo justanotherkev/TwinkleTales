@@ -3,14 +3,17 @@ from sumy.nlp.tokenizers import Tokenizer
 from sumy.summarizers.lsa import LsaSummarizer
 import nltk
 import sys
-import storyGenerator
+from storyGenerator import storyGen
+
+# from ..storyGenerator.storyGen import story as story
+
 
 nltk.download('punkt')
-sys.path.append('https://github.com/justanotherkev/TwinkleTales/blob/Story-generation-changes-to-openai.py/storyGenerator')  # Include the path to module_folder
+sys.path.insert('E:\IIT studies\2 ND YEAR MATERIAL\SDGP\TwinkleTales')  # Include the path to module_folder
 
 
 # story to be summarized
-story = storyGenerator.story
+story = storyGen.story
 
 parser = PlaintextParser.from_string(story, Tokenizer("english"))
 
