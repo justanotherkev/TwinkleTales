@@ -21,19 +21,13 @@ def download_image(image_url, directory, filename):
 ending = "in a colourful children's story animation style with out any texts."
 
 prompts = [
-    # "The sky was a bright shade of blue, and fluffy clouds drifted lazily overhead."
-    # "Molly and Robbie loved to play catch with a soft ball made of leaves in the meadow."
-    # "One day, as they were playing catch, Robbie noticed that Molly's little mouse hole was looking a bit messy."
-    # "Molly, I think there's a storm coming, he said, concern evident in his voice."
-    # "They hurried back to Robbie's burrow, which was sturdier and more sheltered from the storm."
-    # "Thank you for helping me tidy up, Robbie, said Molly, her eyes shining with gratitude."
     
-    f"The sky was a bright shade of blue, and fluffy clouds drifted lazily overhead {ending}",
-    f"Molly the mouse and Robbie the rabbit loved to play catch with a soft ball made of leaves {ending}",
-    f"One day, as they were playing catch, Robbie noticed that Molly's little mouse hole was looking a bit messy {ending}",
-    f"Molly, I think there's a storm coming, he said, concern evident in his voice {ending}",
-    f"They hurried back to Robbie's burrow, which was sturdier and more sheltered from the storm. children story book animation style.",
-    f"Thank you for helping me tidy up, Robbie, said Molly, her eyes shining with gratitude children story book animation style."
+    f"Ming was a little koala who lived in the Australian jungle {ending}",
+    f"One sunny day, Ming woke up early and couldn't wait to go play cricket with his friends {ending}",
+    f"He quickly ate his eucalyptus leaves for breakfast and headed out to the jungle clearing where they always played {ending}",
+    f"He quickly grabbed some leaves and carefully removed the thorns from Joey's fur {ending}",
+    f"They had so much fun playing together, and Joey even scored a few runs! {ending}",
+    f"Soon, they were all playing cricket together, and Ming was so happy that he could share his love for the game with his friends and a new friend like Joey {ending}"
 ]
 
 directory = r"E:\IIT studies\2 ND YEAR MATERIAL\SDGP\IMAGES"  # Change this to your desired directory
