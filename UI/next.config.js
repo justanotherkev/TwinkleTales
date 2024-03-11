@@ -1,5 +1,25 @@
 /** @type {import('next').NextConfig} */
+
+module.exports = {
+	images: {
+		domains: ["replicate.delivery"],
+	},
+};
+
 const nextConfig = {
+	reactStrictMode: true,
+	images: {
+		remotePatterns: [
+			{
+				protocol: "https",
+				hostname: "replicate.com",
+			},
+			{
+				protocol: "https",
+				hostname: "replicate.delivery",
+			},
+		],
+	},
 	rewrites: async () => {
 		return [
 			{
