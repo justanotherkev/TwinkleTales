@@ -7,41 +7,36 @@ export default function ButtonAction(props) {
 
 	const handleClick = async () => {
 		props.setShowDisplay(true);
+		props.setIsError(false);
+		props.setPrompt("");
 		setButtonText("Listening");
 
 		let data;
 
-		setTimeout(function () {
-			props.setPrompt(
-				"So tell me, what is the name of your character in today's story?"
-			);
-		}, 2500);
-
 		try {
-			for (let i = 0; i < 6; i++) {
+			for (let i = -1; i < 5; i++) {
+				console.log("Calling: " + i);
 				const res = await fetch("http://localhost:8000/", {
 					method: "GET",
 					headers: { "Content-Type": "application/json" },
 				});
 				data = await res.json();
-				setTimeout(function () {
-					console.log(data.message[0]);
-					console.log(data.message[1]);
+
+				const intervalId = setInterval(() => {
+					console.log(i + ". " + data.message[0] + ", " + data.message[1]);
 					props.setPrompt(data.message[0]);
-					props.setAnswers("You said: " + data.message[1]);
+					props.setAnswers(data.message[1]);
+					clearInterval(intervalId);
 				}, 2500);
 			}
 
-			// console.log(data.message[0].name);
-
-			// setButtonText(data.message);
 		} catch (error) {
+			props.setIsError(true);
 			props.setPrompt("Oh no! Something went wrong. Please try again later");
+			setButtonText("Tell me a story");
 		}
 
-		while (true) {
-			props.setPrompt();
-		}
+		props.goToStoryPage(data.message[2]);
 	};
 
 	return (
