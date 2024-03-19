@@ -36,3 +36,6 @@ next-env.d.ts
 misc.xml
 textToSpeech.iml
 vcs.xml
+
+# PyCache files
+*.pyc
