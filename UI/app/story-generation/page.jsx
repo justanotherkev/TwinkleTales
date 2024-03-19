@@ -38,8 +38,26 @@ export default function StoryGeneration({ searchParams }) {
 	};
 
 	useEffect(() => {
-		setAnswers(searchParams.data);
+		
 	}, []);
+
+	const sendSpeechPrompts = async () => {
+		const list1 = ["David","London","Football","park","sunny"]
+		try{
+
+			console.log("Sending the output page data")
+			const res = await fetch("http://localhost:8000/",{
+				method:"POST",
+				headers: { "Content-Type": "application/json" },
+				body:JSON.stringify({list1})
+			})
+		}
+		catch{
+
+			console.log("Something went wront while sending the data.")
+			
+		}
+	}
 
 	const generateImages = async () => {
 		console.log("Generating...");
@@ -49,17 +67,20 @@ export default function StoryGeneration({ searchParams }) {
 		// });
 		// data = await res.json();
 
-		let i = 0;
-		const intervalId = setInterval(() => {
-			if (i >= imageList.length) {
-				setImageSourceList();
-				setEnd(true);
-				clearInterval(intervalId); // stop the interval
-			} else {
-				setImageSourceList(imageList[i]);
-				i++;
-			}
-		}, 2000);
+		sendSpeechPrompts()
+
+
+		// let i = 0;
+		// const intervalId = setInterval(() => {
+		// 	if (i >= imageList.length) {
+		// 		setImageSourceList();
+		// 		setEnd(true);
+		// 		clearInterval(intervalId); // stop the interval
+		// 	} else {
+		// 		setImageSourceList(imageList[i]);
+		// 		i++;
+		// 	}
+		// }, 2000);
 	};
 
 	return (

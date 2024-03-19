@@ -24,9 +24,9 @@ def generateImages(prompts):
             input={"prompt": prompt}
         )
         image_URLs.append(output[0])
-        pprint(output)
+        # pprint(output)
     return image_URLs        
 
-# generateImages(prompts=prompts) 
+generateImages(prompts=prompts) 
 
 
