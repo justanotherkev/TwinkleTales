@@ -10,9 +10,12 @@ export const metadata = {
   description: "A story generating application for kids",
 };
 
+const clerkFrontendApi = process.env.NEXT_PUBLIC_CLERK_PUBLISHABLE_KEY;
+const clerkApiKey = process.env.CLERK_API_KEY;
+
 export default function RootLayout({ children }) {
   return (
-    <ClerkProvider>
+    <ClerkProvider publishableKey={clerkFrontendApi}>
       <html lang="en">
         <body className={inter.className}>{children}</body>
       </html>
