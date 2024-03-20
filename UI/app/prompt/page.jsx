@@ -5,12 +5,14 @@ import PageComponent2 from "@/components/page-component-2/page-component-2.jsx";
 import s from "./page.module.css";
 import { useState } from "react";
 import { useRouter } from "next/navigation";
+import React from "react";
 
 export default function Prompt() {
 	const [prompt, setPrompt] = useState("");
 	const [answers, setAnswers] = useState("");
 	const [isError, setIsError] = useState(false);
 	const [showDisplay, setShowDisplay] = useState(false);
+	const [isHidden, setIsHidden] = useState(true);
 	const router = useRouter();
 
 	if (showDisplay) {
@@ -41,27 +43,49 @@ export default function Prompt() {
 		);
 	};
 
+	const handleHover = () => {
+		setIsHidden(!isHidden); // Toggle isHidden state
+	};
+
 	return (
-		<PageComponent2
-			src={"/story-prompt-img.png"}
-			component={
-				<div className={s.container}>
-					<div className={s.prompt} id="prompt">
-						{prompt}
+		<>
+			<div
+				className={s.tutorial_button}
+				onMouseEnter={handleHover}
+				onMouseLeave={handleHover}
+				onTouchStart={handleHover}
+				onTouchEnd={handleHover}
+			>
+				<img className={s.question_mark} src="/question-mark.svg" alt="" />
+			</div>
+			<div className={`${s.tutorial_details} ${isHidden ? s.hidden : ""}`}>
+				1. Click the "Tell me a story" button
+				<br />
+				2. Wait for the prompt
+				<br />
+				3. Answer the question
+			</div>
+			<PageComponent2
+				src={"/story-prompt-img.png"}
+				component={
+					<div className={s.container}>
+						<div className={s.prompt} id="prompt">
+							{prompt}
+						</div>
+						<ButtonStory
+							setPrompt={setPrompt}
+							setAnswers={setAnswers}
+							setShowDisplay={setShowDisplay}
+							setIsError={setIsError}
+							goToStoryPage={goToStoryPage}
+						/>
+						<div className={s.answers} id="answers">
+							{answers}
+						</div>
 					</div>
-					<ButtonStory
-						setPrompt={setPrompt}
-						setAnswers={setAnswers}
-						setShowDisplay={setShowDisplay}
-						setIsError={setIsError}
-						goToStoryPage={goToStoryPage}
-					/>
-					<div className={s.answers} id="answers">
-						{answers}
-					</div>
-				</div>
-			}
-		/>
+				}
+			/>
+		</>
 	);
 }
 
