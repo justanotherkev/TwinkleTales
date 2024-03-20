@@ -1,3 +1,96 @@
+@keyframes shiver {
+	0% {
+		transform: rotate(10deg);
+	}
+	10% {
+		transform: rotate(-20deg);
+	}
+	20% {
+		transform: rotate(30deg);
+	}
+	30% {
+		transform: rotate(-50deg);
+	}
+	40% {
+		transform: rotate(45deg);
+	}
+	50% {
+		transform: rotate(-35deg);
+	}
+	60% {
+		transform: rotate(20deg);
+	}
+	70% {
+		transform: rotate(-10deg);
+	}
+	80% {
+		transform: rotate(10deg);
+	}
+	90% {
+		transform: rotate(-5deg);
+	}
+	100% {
+		transform: rotate(0deg);
+	}
+}
+
+.tutorial_button {
+	position: fixed;
+	top: 25px;
+	left: 25px;
+	border-radius: 100%;
+	display: flex;
+	justify-content: center;
+	align-items: center;
+	width: 35px;
+	height: 35px;
+	box-shadow: black 3px 7px 12px;
+	background: linear-gradient(to bottom, #fff863, #e45820);
+	transition: 0.2s;
+}
+
+.tutorial_button:hover {
+	background: linear-gradient(to bottom, #fef773 20%, #e45820);
+	color: white;
+	box-shadow: black 1px 1px 2px;
+}
+
+.question_mark {
+	/* border: red 1px solid; */
+	padding: 7px;
+	border-radius: 100%;
+	width: 20px;
+	height: 20px;
+}
+
+.tutorial_details.hidden {
+	opacity: 1;
+	z-index: -2;
+	transform: translateX(-350px);
+	transition: 0.2s;
+}
+
+.tutorial_details {
+	position: fixed;
+	z-index: -2;
+	font-size: 75px;
+	left: 70px;
+	top: 25px;
+	background-color: #f0a03e;
+	box-shadow: black 3px 7px 12px;
+	font-size: 15px;
+	font-family: "Sora", sans-serif;
+	width: max-content;
+	padding: 5px;
+	border-radius: 5px;
+	height: 60px;
+	transition: 0.2s;
+}
+
+.question_mark:hover {
+	animation: shiver 0.5s;
+}
+
 .container {
 	/* border: red 1px solid; */
 	display: flex;

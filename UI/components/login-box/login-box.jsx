@@ -1,71 +1,88 @@
 "use client";
+import { useRouter } from "next/navigation";
 import FormButton from "../form-button/form-button";
 import s from "./login-box.module.css";
-import { useSignIn } from "@clerk/nextjs";
+import { useAuth, useSignIn } from "@clerk/nextjs";
+import { useState } from "react";
 
 export default function LoginBox() {
-	const { signIn, isActive, isLoaded } = useSignIn();
+  const { isLoaded, signIn, setActive } = useSignIn();
+  const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
+  const router = useRouter();
 
-	const verifyCredentials = () => {
-		console.log("Verifying credentials...");
-	};
+  // start the sign In process.
+  const handleSubmit = async (e) => {
+    console.log("Submitting credentials");
+    e.preventDefault();
 
-	const handleSubmit = async (e) => {
-		console.log("Submitting...");
-		e.preventDefault();
+    setEmail(e.target.email.value);
+    setPassword(e.target.password.value);
 
-		const username = e.target.username.value;
-		const password = e.target.password.value;
+    if (!isLoaded) {
+      return;
+    }
 
-		console.log(username);
-		console.log(password);
-	};
+    try {
+      const result = await signIn.create({
+        identifier: email,
+        password: password,
+      });
 
-	if (!isLoaded) {
-		return (
-			<div className={s.login_box}>
-				<h2 className={s.title}>Loading...</h2>
-			</div>
-		);
-	} else {
-		return (
-			<div className={s.login_box}>
-				<h2 className={s.title}>Login</h2>
+      if (result.status === "complete") {
+        console.log(result);
+        await setActive({ session: result.createdSessionId });
+        router.push("/prompt");
+      } else {
+        console.log(result);
+      }
+    } catch (error) {
+      console.error("error", error.errors[0].longMessage);
+    }
+  };
 
-				<form
-					onSubmit={handleSubmit}
-					// action="/submit"
-					// method="post"
-					className={s.form}
-				>
-					<div className={s.credentials_box}>
-						<div className={s.credential_detail}>
-							<label for="username">Username</label>
-							<input type="text" id="username" name="username" required />
-						</div>
+  if (!isLoaded) {
+    return (
+      <div className={s.login_box}>
+        <h2 className={s.title}>Loading...</h2>
+      </div>
+    );
+  } else {
+    return (
+      <div className={s.login_box}>
+        <h2 className={s.title}>Login</h2>
 
-						<div className={s.credential_detail}>
-							<label for="password">Password</label>
-							<input type="password" id="password" name="password" required />
-						</div>
-					</div>
+        <form
+          onSubmit={handleSubmit}
+          // action="/submit"
+          // method="post"
+          className={s.form}
+        >
+          <div className={s.credentials_box}>
+            <div className={s.credential_detail}>
+              <label for="email">Email</label>
+              <input type="email" id="email" name="email" required />
+            </div>
 
-					{/* <div class="continue-with-google">
+            <div className={s.credential_detail}>
+              <label for="password">Password</label>
+              <input type="password" id="password" name="password" required />
+            </div>
+          </div>
+
+          {/* <div class="continue-with-google">
 						<span>Continue with Google</span>
 					</div>
 					<div class="continue-with-facebook">
 						<span>Continue with Facebook</span>
 					</div> */}
 
-					<FormButton
-						isNav={false}
-						name={"Login"}
-						onClick={verifyCredentials}
-					/>
-				</form>
-			</div>
-		);
-	}
+          {/* <p>Forgot password</p> */}
+          <FormButton isNav={false} name={"Login"} type={"submit"} />
+        </form>
+      </div>
+    );
+  }
 }
 
 // autofill ofr STT
