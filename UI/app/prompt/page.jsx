@@ -35,8 +35,7 @@ export default function Prompt() {
 	}
 
 	const goToStoryPage = (answer_data) => {
-		console.log("In push");
-		console.log("Pushing");
+		console.log("Pushing to story output page");
 		router.push(
 			"/story-generation?data=" +
 				encodeURIComponent(JSON.stringify(answer_data))
@@ -89,4 +88,4 @@ export default function Prompt() {
 	);
 }
 
-//So tell me, what are the characters in today's story?
+

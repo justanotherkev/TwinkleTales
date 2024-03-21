@@ -1,11 +1,12 @@
 from storyGenerator.storyGen import storyGenerator
 from storySummerizer.summerizer import storySummerizer
 from ImageGenerator.imageGen import generateImages
-# from UI.api.main import speak
+from UI.api.main import speak
 from fastapi import FastAPI
 from fastapi.middleware.cors import CORSMiddleware
 from pydantic import BaseModel
 from typing import List
+from dotenv import load_dotenv
 
 story_app = FastAPI()
 
@@ -20,8 +21,9 @@ story_app.add_middleware(
     allow_headers=["*"],
 )
 
-# story = ""
-# image_prompts = []
+
+load_dotenv()
+
 
 class Item(BaseModel):
     list1: List[str]
@@ -29,25 +31,32 @@ class Item(BaseModel):
 # Post method to recive the prompts for the story generation
 @story_app.post("/")
 async def start_content_generation(item: Item ):
-    # print("This is printing the list from the pyhton post method")
-    # print(item.list1)
-    set_output(item.list1)
+    print("This is printing the list from the pyhton post method")
+    print(item.list1)
+    return {"message": set_output(item.list1)}
 
-# Get method for sending the image URL to be displayed 
-    
+
 # Get the method for the story narration
-    
+@story_app.get("/")
+def get_narration():
+    speak(story)
+    return {"message": "The story is being played..."}
+        
+
+story = ""
 
 def set_output(speech_inputs):
+    global story
     story = storyGenerator(speech_inputs)
 
-    print()
+    print("Print the story from inside the set_output function:",story)
 
     sentences = storySummerizer(story)
+    print("Print the sentences from inside the set_output function:",sentences)
 
     print()
 
-    ending = "in a colourful children's story animation style with out any texts."
+    ending = "in a colourful 3D children's story animation style with out any texts."
     image_prompts = []
 
     for i in sentences:
@@ -55,25 +64,17 @@ def set_output(speech_inputs):
         i = i+ending
         image_prompts.append(i)
 
-    # print("The image prompts after editing: ")
-    # print(image_prompts)
-    # print()
-
+    global images
     images = generateImages(image_prompts)
-    print()
+    print("Print the image urls from inside the set_output function:",images)
 
-    print("Print images:")
-    print(images)
+    return(images)
     
 
-# def play_output():
 
 
-# @story_app.get("/")
-# def get_content():
-#     return {"message": get_prompt()}
 
-# Install eleven labs 
+
 
 
 
