@@ -10,8 +10,8 @@ export default function StoryGeneration({ searchParams }) {
 	const [end, setEnd] = useState(false);
 	const [answers, setAnswers] = useState("Answers will show here");
 	const [playMusic, setPlayMusic] = useState(false);
-	const audioUrl =
-		"https://utfs.io/f/e7c7db5e-a02e-48b9-b7c1-d9e10c91bfec-xnnced.mp3";
+	const [selectedAudioIndex, setSelectedAudioIndex] = useState(0);
+	const [audioUrls, setAudioUrls] = useState([]);
 
 	const imageList = [
 		"https://replicate.delivery/pbxt/w8fWfmHNPzlcYkCesaThvCc1rcEXGUmnThelaB5cevAumv0TC/out-0.png", // clouds
@@ -24,14 +24,44 @@ export default function StoryGeneration({ searchParams }) {
 
 	const router = useRouter();
 
+	useEffect(() => {
+		fetchAudioUrls();
+	  }, []);
+
+	const fetchAudioUrls = async () => {
+		console.log("Fetching audio URLs...");
+		try {
+		  const response = await fetch("http://localhost:8000/", {
+			method: "GET",
+			headers: { "Content-Type": "application/json" },
+		  });
+		  console.log("Fetch complete");
+	  
+		  const data = await response.json();
+		  console.log('Fetched audio URLs:', data);
+		  setAudioUrls(data.message); // Set the audio URLs from the fetched data
+		} catch (error) {
+		  console.error('Error fetching audio URLs:', error);
+		}
+	  };
+	  
+	  useEffect(() => {
+		if (audioUrls.length > 0) {
+		  const randomIndex = Math.floor(Math.random() * audioUrls.length);
+		  setSelectedAudioIndex(randomIndex);
+		}
+	  }, [audioUrls]);
+
+	  const selectedAudioUrl = audioUrls.length > 0 ? audioUrls[selectedAudioIndex].audio_url : '';
+
 	const handleClick = () => {
 		setPlayMusic(true);
 	};
 
 	const audioElement = document.getElementById("audio-player");
 	if (playMusic) {
-		audioElement.play();
-	}
+		audioElement.play()
+	}        
 
 	const handleRouting = () => {
 		router.push("/prompt");
@@ -83,6 +113,8 @@ export default function StoryGeneration({ searchParams }) {
 		// }, 2000);
 	};
 
+	
+
 	return (
 		<PageComponent2
 			src={"/story-reading-img.png"}
@@ -97,7 +129,7 @@ export default function StoryGeneration({ searchParams }) {
 						className="audio-player-styles"
 						id="audio-player"
 						controls={true}
-						src={audioUrl}
+						src={selectedAudioUrl}
 						autoPlay
 					/>
 					<button onClick={generateImages}>.</button>
