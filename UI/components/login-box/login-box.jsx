@@ -10,6 +10,7 @@ export default function LoginBox() {
 	const { isLoaded, signIn, setActive } = useSignIn();
 	const [email, setEmail] = useState("");
 	const [password, setPassword] = useState("");
+	const [errorMsg, setErrMsg] = useState("");
 	const router = useRouter();
 
 	// start the sign In process.
@@ -38,7 +39,10 @@ export default function LoginBox() {
 				console.log(result);
 			}
 		} catch (error) {
-			console.error("error", error.errors[0].shortMessage);
+			console.table("error", error.errors[0].longMessage);
+			setErrMsg(error.errors[0].longMessage);
+			// console.table("Error when logging in: "+ completeS);
+			// console.table(JSON.stringify(completeSignUp, null, 2));
 		}
 	};
 
@@ -93,6 +97,7 @@ export default function LoginBox() {
 						</span>
 					</p>
 				</form>
+				<p className={s.error_message}>{errorMsg}</p>
 			</div>
 		);
 	}

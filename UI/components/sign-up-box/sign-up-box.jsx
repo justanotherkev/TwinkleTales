@@ -62,27 +62,27 @@ export default function SignUpBox() {
 			return;
 		}
 
-		// try {
-		console.log("in try block verifyCode");
-		const completeSignUp = await signUp.attemptEmailAddressVerification({
-			code: code,
-		});
+		try {
+			console.log("in try block verifyCode");
+			const completeSignUp = await signUp.attemptEmailAddressVerification({
+				code: code,
+			});
 
-		if (completeSignUp.status !== "complete") {
-			console.log("Could not complete signup");
-			console.log(JSON.stringify(completeSignUp, null, 2));
-		}
+			if (completeSignUp.status !== "complete") {
+				console.log("Could not complete signup");
+				console.log(JSON.stringify(completeSignUp, null, 2));
+			}
 
-		if (completeSignUp.status === "complete") {
-			console.log("Signup completed");
-			await setActive({ session: completeSignUp.createdSessionId });
-			console.log("Pushing route /prompt");
-			router.push("/prompt");
+			if (completeSignUp.status === "complete") {
+				console.log("Signup completed");
+				await setActive({ session: completeSignUp.createdSessionId });
+				console.log("Pushing route /prompt");
+				router.push("/prompt");
+			}
+		} catch (error) {
+			console.log(JSON.stringify(error, null, 2));
+			setErrorMsg(error.errors[0].message);
 		}
-		// } catch (error) {
-		// 	console.error(JSON.stringify(error, null, 2));
-		// 	setErrorMsg(error.errors[0].message);
-		// }
 	};
 
 	if (!isLoaded) {
