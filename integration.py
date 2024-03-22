@@ -1,8 +1,9 @@
+from sympy import true
 from storyGenerator.storyGen import storyGenerator
 from storySummerizer.summerizer import storySummerizer
 from ImageGenerator.imageGen import generateImages
 from UI.api.main import speak
-from fastapi import FastAPI,Request
+from fastapi import FastAPI, Request
 from fastapi.middleware.cors import CORSMiddleware
 from pydantic import BaseModel
 from typing import List
@@ -25,45 +26,40 @@ load_dotenv()
 
 story = ""
 
+
 # Post method to recive the prompts for the story generation
 @story_app.post("/")
 async def start_content_generation(request: Request):
-    list_str = await request.json()  
+    print("\n[integration.py] - start_content_generation() running...")
+    list_str = await request.json()
     return {"message": set_output(list_str)}
 
 
 # Get the method for the story narration
 @story_app.get("/")
 def get_narration():
+    print("\n[integration.py] - get_narration() running...")
     global story
     speak(story)
-    return {"message": "The story is being played..."}
-        
+    return {"message": "OK"}
+
+
 def set_output(speech_inputs):
     global story
     story = storyGenerator(speech_inputs)
 
     sentences = storySummerizer(story)
 
-    ending = "in a colourful 3D children's story animation style with out any texts."
+    ending = "in a colourful 3D-cartoon children's story animation style without any texts."
     image_prompts = []
 
     for i in sentences:
-        i = str(i).replace("."," ")
-        i = i+ending
+        i = str(i).replace(".", " ")
+        i = i + ending
         image_prompts.append(i)
 
     global images
     images = generateImages(image_prompts)
-    print("Print the image urls from inside the set_output function:",images)
+    print("\n[integration.py] - Received images", images)
 
-    return(images)
-    
-
-
-
-
-
-
-
-
+    return images

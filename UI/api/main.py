@@ -1,9 +1,12 @@
+import re
 from fastapi import FastAPI
 from fastapi.middleware.cors import CORSMiddleware
 import elevenlabs
 import speech_recognition as stt
 import time
+from sympy import false
 from textblob import TextBlob
+from pydantic import BaseModel
 
 
 def extract_nouns(text):
@@ -171,16 +174,23 @@ app.add_middleware(
 )
 
 
+class State(BaseModel):
+    running: bool = false
+
+
 def speak(text1):
+    print("[main.py] - speak() running...")
+    # print(text1)
     tts = elevenlabs.generate(
-        
         text=text1,
         voice="Charlotte",
         api_key="ac764488fbfd187d77d484e08b31293a",  # PAID API KEY
         # text=text1, voice="Charlotte", api_key="d8613a6881457e59de8990ac407ee004" # NEW API KEY
-        # text=text1, voice="Charlotte", api_key="ac764488fbfd187d77d484e08b31293a" # PREMIUM API KEY
     )
-    elevenlabs.play(tts)
+    
+    with open("output_audio.mp3", "wb") as audio_file:
+        audio_file.write(tts)
+    # elevenlabs.play(tts)
 
 
 answers = ["", "", "", "", ""]
@@ -230,11 +240,11 @@ def get_prompt():
     while count_break < 8:
         count_break += 1
         try:
-            if count == -1:
+            if count == -1 and state:
                 count = 0
                 return [questions[0], ""]
 
-            if count == 0:
+            if count == 0 and state:
                 if not afterError:
                     speak(questions[0])
                     # print(questions[0])
@@ -250,7 +260,7 @@ def get_prompt():
                 error_questions[1] = f"Where does {answers[0].capitalize()} live?"
                 return [questions[1], "Your last answer: " + answers[0]]
 
-            if count == 1:
+            if count == 1 and state:
                 if not afterError:
                     speak(questions[1])
                     # print(questions[1])
@@ -268,7 +278,7 @@ def get_prompt():
                 )
                 return [questions[2], "Your last answer: " + answers[1]]
 
-            if count == 2:
+            if count == 2 and state:
                 if not afterError:
                     speak(questions[2])
                     # print(questions[2])
@@ -287,7 +297,7 @@ def get_prompt():
                 )
                 return [questions[3], "Your last answer: " + answers[2]]
 
-            if count == 3:
+            if count == 3 and state:
                 if not afterError:
                     speak(questions[3])
                     # print(questions[3])
@@ -303,7 +313,7 @@ def get_prompt():
                 )
                 return [questions[4], "Your last answer: " + answers[3]]
 
-            if count == 4:
+            if count == 4 and state:
                 if not afterError:
                     speak(questions[4])
                     # print(questions[4])
@@ -333,9 +343,22 @@ def get_prompt():
             # )
 
 
+state = State()
+
+
 @app.get("/")
 def get_content():
+    state.running = True
     return {"message": get_prompt()}
+
+
+@app.get("/reset")
+def reset_content():
+    global answers
+    global count
+    answers = ["", "", "", "", ""]
+    count = -1
+    state.running = False
 
 
 # import openai

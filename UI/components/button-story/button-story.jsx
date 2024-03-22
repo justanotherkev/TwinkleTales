@@ -1,9 +1,26 @@
 "use client";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import s from "./button-story.module.css";
 
 export default function ButtonAction(props) {
 	const [buttonText, setButtonText] = useState("Tell me a story");
+	const endpoint = "http://localhost:8000/";
+
+	useEffect(() => {
+		// main.py kill switch
+		resetServer();
+	}, []);
+
+	const resetServer = async () => {
+		try {
+			await fetch("http://localhost:8000/reset", {
+				method: "GET",
+				headers: { "Content-Type": "application/json" },
+			});
+		} catch (error) {
+			console.log(error);
+		}
+	};
 
 	const handleClick = async () => {
 		props.setShowDisplay(true);
@@ -16,7 +33,7 @@ export default function ButtonAction(props) {
 		// try {
 		// 	for (let i = -1; i < 5; i++) {
 		// 		console.log("Calling: " + i);
-		// 		const res = await fetch("http://localhost:8000/", {
+		// 		const res = await fetch(endpoint, {
 		// 			method: "GET",
 		// 			headers: { "Content-Type": "application/json" },
 		// 		});
@@ -29,17 +46,26 @@ export default function ButtonAction(props) {
 		// 			clearInterval(intervalId);
 		// 		}, 2500);
 		// 	}
-
 		// } catch (error) {
 		// 	props.setIsError(true);
 		// 	props.setPrompt("Oh no! Something went wrong. Please try again later");
 		// 	setButtonText("Tell me a story");
 		// }
 
-
-
-		// props.goToStoryPage(data.message[2]);
-		props.goToStoryPage(["Anne","Paris","Badminton","waterpark","rainy"]);
+		// if (data !== undefined) {
+		// 	if (data.message[2] !== undefined) {
+		// 		props.goToStoryPage(data.message[2]);
+		// 	} else {
+		// 		props.setIsError(true);
+		// 		props.setPrompt("Oh no! Something went wrong. Please try again later");
+		// 		setButtonText("Tell me a story");
+		// 	}
+		// } else {
+		// 	props.setIsError(true);
+		// 	props.setPrompt("Oh no! Something went wrong. Please try again later");
+		// 	setButtonText("Tell me a story");
+		// }
+		props.goToStoryPage(["Anne", "Paris", "Badminton", "school", "Sunny"]);
 	};
 
 	return (

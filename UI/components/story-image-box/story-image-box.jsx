@@ -4,6 +4,7 @@ import Image from "next/image";
 
 export default function StoryImageBox(props) {
 	if (props.src) {
+		console.log("props.src: " + props.src)
 		return (
 			<div className={s.story_image_box}>
 				<Image
