@@ -1,4 +1,3 @@
-
 import re
 from fastapi import FastAPI
 from fastapi.middleware.cors import CORSMiddleware
@@ -190,16 +189,20 @@ def speak(text1):
     )
     elevenlabs.play(tts)
 
+
 def generate_narration_audio_file(text1):
     print("[main.py] - generate_narration_audio_file() running...")
     tts = elevenlabs.generate(
         # text=text1,
         # voice="Charlotte",
         # api_key="ac764488fbfd187d77d484e08b31293a",  # PAID API KEY
-        text=text1, voice="Charlotte", api_key="d8613a6881457e59de8990ac407ee004" # NEW API KEY
+        text=text1,
+        voice="Charlotte",
+        api_key="d8613a6881457e59de8990ac407ee004",  # NEW API KEY
     )
-    with open("../app", "wb") as audio_file:
+    with open("../speechToText/narration_audio.mp3", "wb") as audio_file:
         audio_file.write(tts)
+
 
 answers = ["", "", "", "", ""]
 

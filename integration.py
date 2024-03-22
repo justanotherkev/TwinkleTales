@@ -1,10 +1,8 @@
-
-
-from story-generator.story_gen import story_generator
-from story-summerizer.summerizer import story_summerizer
-from image-generator.image_gen import generate_images
-from image-generator.image_gen import return_urls
-from speech-to-text-generator.speech_to_text_generator import generate_narration_audio_file
+from storyGenerator.story_gen import story_generator
+from storySummerizer.summerizer import story_summerizer
+from imageGenerator.image_gen import generate_images
+from imageGenerator.image_gen import return_urls
+from speechInputHandler.speech_input_handler import generate_narration_audio_file
 from fastapi import FastAPI, Request
 from fastapi.middleware.cors import CORSMiddleware
 from dotenv import load_dotenv
@@ -50,7 +48,9 @@ def set_output(speech_inputs):
 
     sentences = story_summerizer(story)
 
-    ending = "in a colourful 3D-cartoon children's story animation style without any texts."
+    ending = (
+        "in a colourful 3D-cartoon children's story animation style without any texts."
+    )
     image_prompts = []
 
     for i in sentences:
