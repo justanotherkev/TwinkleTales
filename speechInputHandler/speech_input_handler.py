@@ -200,8 +200,17 @@ def generate_narration_audio_file(text1):
         voice="Charlotte",
         api_key="d8613a6881457e59de8990ac407ee004",  # NEW API KEY
     )
-    with open("../speechToText/narration_audio.mp3", "wb") as audio_file:
+    with open("narration_audio.mp3", "wb") as audio_file:
         audio_file.write(tts)
+    
+    # Add the timer finction here so that generate_narration_audio_file() can
+    # return the duration_per_image
+    # e.g. return duration_per_image()
+        
+    # duration_in_milli = duration_per_image("narration_audio.mp3")
+
+    # return duration_in_milli
+
 
 
 answers = ["", "", "", "", ""]

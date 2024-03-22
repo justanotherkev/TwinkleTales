@@ -57,7 +57,8 @@ def set_output(speech_inputs):
         i = str(i).replace(".", " ")
         i = i + ending
         image_prompts.append(i)
-
+    
+    print("\n[integration.py] - Image prompts", image_prompts)
     global images
     generate_images(image_prompts)
     images = return_urls()
