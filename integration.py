@@ -1,15 +1,12 @@
-integration.py
 
-from sympy import true
-from storyGenerator.storyGen import storyGenerator
-from storySummerizer.summerizer import storySummerizer
-from ImageGenerator.imageGen import generateImages
-from ImageGenerator.imageGen import return_urls
-from UI.api.main import generate_narration_audio_file
+
+from story-generator.story_gen import story_generator
+from story-summerizer.summerizer import story_summerizer
+from image-generator.image_gen import generate_images
+from image-generator.image_gen import return_urls
+from speech-to-text-generator.speech_to_text_generator import generate_narration_audio_file
 from fastapi import FastAPI, Request
 from fastapi.middleware.cors import CORSMiddleware
-from pydantic import BaseModel
-from typing import List
 from dotenv import load_dotenv
 
 story_app = FastAPI()
@@ -49,9 +46,9 @@ def get_narration():
 
 def set_output(speech_inputs):
     global story
-    story = storyGenerator(speech_inputs)
+    story = story_generator(speech_inputs)
 
-    sentences = storySummerizer(story)
+    sentences = story_summerizer(story)
 
     ending = "in a colourful 3D-cartoon children's story animation style without any texts."
     image_prompts = []
@@ -62,7 +59,7 @@ def set_output(speech_inputs):
         image_prompts.append(i)
 
     global images
-    generateImages(image_prompts)
+    generate_images(image_prompts)
     images = return_urls()
     print("\n[integration.py] - Received images", images)
 

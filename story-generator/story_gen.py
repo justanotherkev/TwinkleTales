@@ -2,7 +2,7 @@ import ast
 from openai import OpenAI
 
 
-def storyGenerator(story_data):
+def story_generator(story_data):
 
     story_data_list = ast.literal_eval(story_data)
 
