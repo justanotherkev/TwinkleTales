@@ -16,11 +16,11 @@ from pprint import pprint
 #     f"Nina was happy and thanked her grandmother for the fun day they had {ending}"
 # ]
 
+image_URLs = []
 
 def generateImages(prompts):
     print("\n[imageGen.py] - Received prompts:")
-    image_URLs = []
-
+    global image_URLs
     for prompt in prompts:
         output = replicate.run(
             "stability-ai/sdxl:39ed52f2a78e934b3ba6e2a89f5b1c712de7dfea535525255b1aa35c5565e08b",
@@ -28,6 +28,8 @@ def generateImages(prompts):
         )
         image_URLs.append(output[0])
         pprint(output)
+
+def return_urls():
     return image_URLs
 
     # image_URLs = [

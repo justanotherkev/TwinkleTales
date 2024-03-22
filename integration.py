@@ -2,6 +2,7 @@ from sympy import true
 from storyGenerator.storyGen import storyGenerator
 from storySummerizer.summerizer import storySummerizer
 from ImageGenerator.imageGen import generateImages
+from ImageGenerator.imageGen import return_urls
 from UI.api.main import speak
 from fastapi import FastAPI, Request
 from fastapi.middleware.cors import CORSMiddleware
@@ -59,7 +60,8 @@ def set_output(speech_inputs):
         image_prompts.append(i)
 
     global images
-    images = generateImages(image_prompts)
+    generateImages(image_prompts)
+    images = return_urls()
     print("\n[integration.py] - Received images", images)
 
     return images
