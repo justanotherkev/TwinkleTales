@@ -1,3 +1,4 @@
+main.py
 import re
 from fastapi import FastAPI
 from fastapi.middleware.cors import CORSMiddleware
@@ -187,11 +188,18 @@ def speak(text1):
         api_key="ac764488fbfd187d77d484e08b31293a",  # PAID API KEY
         # text=text1, voice="Charlotte", api_key="d8613a6881457e59de8990ac407ee004" # NEW API KEY
     )
-    
-    with open("output_audio.mp3", "wb") as audio_file:
-        audio_file.write(tts)
-    # elevenlabs.play(tts)
+    elevenlabs.play(tts)
 
+def generate_narration_audio_file(text1):
+    print("[main.py] - generate_narration_audio_file() running...")
+    tts = elevenlabs.generate(
+        # text=text1,
+        # voice="Charlotte",
+        # api_key="ac764488fbfd187d77d484e08b31293a",  # PAID API KEY
+        text=text1, voice="Charlotte", api_key="d8613a6881457e59de8990ac407ee004" # NEW API KEY
+    )
+    with open("../app", "wb") as audio_file:
+        audio_file.write(tts)
 
 answers = ["", "", "", "", ""]
 
@@ -202,11 +210,10 @@ def speechToText():
     global count
     recognizer = stt.Recognizer()
     with stt.Microphone() as source:
-        recognizer.adjust_for_ambient_noise(source)
+        recognizer.adjust_for_ambient_noise(source, duration=5)
         print("speak now")
         audio = recognizer.listen(source)
         answer_raw = recognizer.recognize_google(audio)
-
         print("answer recieved")
         # answers[count] = (extract_nouns(answer_raw))  # THIS NEEDS TO BE FIXED
         answers[count] = answer_raw
@@ -359,55 +366,3 @@ def reset_content():
     answers = ["", "", "", "", ""]
     count = -1
     state.running = False
-
-
-# import openai
-
-# openai.api_key = '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'
-
-# def generate_story(sport, food, weather, characters, place):
-#     prompt = f"Once upon a time, in a land far away called {place}, the weather was {weather}. "
-#     prompt += f"There were characters named {', '.join(characters)}. They loved to play {sport} and eat {food}. "
-#     prompt += "They went on an adventure and..."
-
-#     response = openai.Completion.create(
-#         engine="text-davinci-003",
-#         prompt=prompt,
-#         temperature=0.7,
-#         max_tokens=150
-#     )
-
-#     story = response.choices[0].text.strip()
-#     return story
-
-# # Example user inputs
-# sport = input("What is your favorite sport? ")
-# food = input("What is your favorite food? ")
-# weather = input("What is the weather like in the story? ")
-# characters = input("Who are the characters in the story? (Separate with commas) ").split(',')
-# place = input("What is the name of the place in the story? ")
-
-# # Generate the story
-# generated_story = generate_story(sport, food, weather, characters, place)
-
-# print("\nGenerated Story:")
-# print(generated_story)
-
-
-# import os
-# from openai import OpenAI
-
-# client = OpenAI(
-#     # This is the default and can be omitted
-#     api_key="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",
-# )
-
-# chat_completion = client.chat.completions.create(
-#     messages=[
-#         {
-#             "role": "user",
-#             "content": "Say this is a test",
-#         }
-#     ],
-#     model="gpt-3.5-turbo",
-# )
