@@ -6,6 +6,7 @@ import s from "./page.module.css";
 import { useState } from "react";
 import { useRouter } from "next/navigation";
 import React from "react";
+import { SignedIn, SignedOut, UserButton } from "@clerk/nextjs";
 
 export default function Prompt() {
 	const [prompt, setPrompt] = useState("");
@@ -48,6 +49,14 @@ export default function Prompt() {
 
 	return (
 		<>
+			<SignedIn>
+				<div className={s.user_button}>
+					<UserButton />
+				</div>
+			</SignedIn>
+
+			<SignedOut></SignedOut>
+
 			<div
 				className={s.tutorial_button}
 				onMouseEnter={handleHover}
@@ -87,5 +96,3 @@ export default function Prompt() {
 		</>
 	);
 }
-
-
