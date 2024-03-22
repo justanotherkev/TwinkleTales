@@ -1,9 +1,11 @@
+integration.py
+
 from sympy import true
 from storyGenerator.storyGen import storyGenerator
 from storySummerizer.summerizer import storySummerizer
 from ImageGenerator.imageGen import generateImages
 from ImageGenerator.imageGen import return_urls
-from UI.api.main import speak
+from UI.api.main import generate_narration_audio_file
 from fastapi import FastAPI, Request
 from fastapi.middleware.cors import CORSMiddleware
 from pydantic import BaseModel
@@ -41,7 +43,7 @@ async def start_content_generation(request: Request):
 def get_narration():
     print("\n[integration.py] - get_narration() running...")
     global story
-    speak(story)
+    generate_narration_audio_file(story)
     return {"message": "OK"}
 
 
