@@ -12,40 +12,39 @@ export default function StoryGeneration({ searchParams }) {
 	const [answers, setAnswers] = useState("Answers will show here");
 	const [playMusic, setPlayMusic] = useState(false);
 	const audioUrl ="https://utfs.io/f/e7c7db5e-a02e-48b9-b7c1-d9e10c91bfec-xnnced.mp3";
-	let image_URLs =[];
 	const [selectedAudioIndex, setSelectedAudioIndex] = useState(0);
 	const [audioUrls, setAudioUrls] = useState([]);
 	const router = useRouter();
 
 	// Fetching all the audio URLs from the database upon a page load/reload.
-	useEffect(() => {
-		fetchAudioUrls();
-	}, []);
+	// useEffect(() => {
+	// 	fetchAudioUrls();
+	// }, []);
 
 	// Randomly pick a audio Url from the audioUrls variable  
-	useEffect(() => {
-		if (audioUrls.length > 0) {
-		  const randomIndex = Math.floor(Math.random() * audioUrls.length);
-		  setSelectedAudioIndex(randomIndex);
-		}
-	}, [audioUrls]);
+	// useEffect(() => {
+	// 	if (audioUrls.length > 0) {
+	// 	  const randomIndex = Math.floor(Math.random() * audioUrls.length);
+	// 	  setSelectedAudioIndex(randomIndex);
+	// 	}
+	// }, [audioUrls]);
 
 	// Upon a page load/reload sending the speech prompts to the integration file
 	useEffect(() => {
-		sendSpeechPrompts()
+		sendSpeechPrompts(searchParams.data)
 	}, []);
 
 	// Upon a page load/reload play the narration from the integration file
-	useEffect(() => {
-		getNarration();
-	})
+	// useEffect(() => {
+	// 	getNarration();
+	// })
 
 	// Fetch request for getting the audio URLs from the database
 	const fetchAudioUrls = async () => {
 		console.log("Fetching audio URLs...");
 		try {
-			//Chnage port 800 to sm else cause main.py is on port 8000
-		  const response = await fetch("http://localhost:8000/", {
+			//Chnage port 8000 to sm else cause main.py is on port 8000
+		  const response = await fetch("http://localhost:8002/", {
 			method: "GET",
 			headers: { "Content-Type": "application/json" },
 		  });
@@ -63,42 +62,40 @@ export default function StoryGeneration({ searchParams }) {
 
 	//To play the music upon the button click
 	const handleClick = () => {
-		setPlayMusic(true);
+		// setPlayMusic(true);
 	};
 
 	//To play the music 
-	const audioElement = document.getElementById("audio-player");
-	if (playMusic) {
-		audioElement.play()
-	}        
+	// const audioElement = document.getElementById("audio-player");
+	// if (playMusic) {
+	// 	audioElement.play()
+	// }        
 
 	//To push to the prompt taking page upon a new story button click.
 	const handleRouting = () => {
 		router.push("/prompt");
 	};
 
-
 	// Sending the prompts to the integration file
 	// Reciving the image URLs from the integration file inn the response
 	// Setting the image Urls in a array varible
-	const sendSpeechPrompts = async () => {
-		const answers = searchParams.data
-		try{
+	const sendSpeechPrompts = async (answers) => {
+		// const answers = searchParams.data
+		console.log(answers)
 
+		try{
 			console.log("Sending the output page data")
 			const res = await fetch("http://localhost:8001/",{
 				method:"POST",
 				headers: { "Content-Type": "application/json" },
-				body:JSON.stringify({answers})
+				body:JSON.stringify(answers)
 			})
+			console.log("Post request was sent")
 			const data = await res.json()
 			console.log(data.message)
-			image_URLs = data.message
-		}
-		catch{
-
-			console.log("Something went wront while sending the data.")
-			
+			setImageSourceList(data.message)
+		} catch {
+			console.log("Something went wrong while sending the data.")
 		}
 	}
 
@@ -147,7 +144,7 @@ export default function StoryGeneration({ searchParams }) {
 					<p style={{ color: "white" }}>{answers}</p>
 					<StoryImageBox src={imageSourceList} end={end} />
 					<BackButton handleRouting={handleRouting} />
-					<button onClick={handleClick}>play audio</button>
+					<button onClick={handleClick}>get images</button>
 
 					<audio
 						className="audio-player-styles"
@@ -156,7 +153,7 @@ export default function StoryGeneration({ searchParams }) {
 						src={selectedAudioUrl}
 						autoPlay
 					/>
-					<button onClick={showImages}>.</button>
+					<button onClick={getNarration}>.</button>
 				</>
 			}
 		/>

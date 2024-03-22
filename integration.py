@@ -2,7 +2,7 @@ from storyGenerator.storyGen import storyGenerator
 from storySummerizer.summerizer import storySummerizer
 from ImageGenerator.imageGen import generateImages
 from UI.api.main import speak
-from fastapi import FastAPI
+from fastapi import FastAPI,Request
 from fastapi.middleware.cors import CORSMiddleware
 from pydantic import BaseModel
 from typing import List
@@ -21,40 +21,29 @@ story_app.add_middleware(
     allow_headers=["*"],
 )
 
-
 load_dotenv()
 
-
-class Item(BaseModel):
-    list1: List[str]
+story = ""
 
 # Post method to recive the prompts for the story generation
 @story_app.post("/")
-async def start_content_generation(item: Item ):
-    print("This is printing the list from the pyhton post method")
-    print(item.list1)
-    return {"message": set_output(item.list1)}
+async def start_content_generation(request: Request):
+    list_str = await request.json()  
+    return {"message": set_output(list_str)}
 
 
 # Get the method for the story narration
 @story_app.get("/")
 def get_narration():
+    global story
     speak(story)
     return {"message": "The story is being played..."}
         
-
-story = ""
-
 def set_output(speech_inputs):
     global story
     story = storyGenerator(speech_inputs)
 
-    print("Print the story from inside the set_output function:",story)
-
     sentences = storySummerizer(story)
-    print("Print the sentences from inside the set_output function:",sentences)
-
-    print()
 
     ending = "in a colourful 3D children's story animation style with out any texts."
     image_prompts = []

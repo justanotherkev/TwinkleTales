@@ -173,19 +173,15 @@ app.add_middleware(
 
 def speak(text1):
     tts = elevenlabs.generate(
-        # text=text1, voice="Dorothy", api_key="8ed01eb7ff0517ca565a17d18035be76" # OLD API KEY (Credits: 0)
-        # text=text1, voice="Dorothy", api_key="db01e5e210bf5c2e59fad426228999c9",  # OLD API KEY (Credits: 0)
+        
         text=text1,
-        voice="Dorothy",
-        api_key="477cba5a374f602e2a147516b64c6608",  # NEW API KEY
-        # text=text1, voice="Dorothy", api_key="d8613a6881457e59de8990ac407ee004" # NEW API KEY
-        # text=text1, voice="Dorothy", api_key="ac764488fbfd187d77d484e08b31293a" # PREMIUM API KEY
+        voice="Charlotte",
+        api_key="ac764488fbfd187d77d484e08b31293a",  # PAID API KEY
+        # text=text1, voice="Charlotte", api_key="d8613a6881457e59de8990ac407ee004" # NEW API KEY
+        # text=text1, voice="Charlotte", api_key="ac764488fbfd187d77d484e08b31293a" # PREMIUM API KEY
     )
     elevenlabs.play(tts)
 
-
-# for i in range(len(elevenlabs.voices())):
-#     print(i)
 
 answers = ["", "", "", "", ""]
 

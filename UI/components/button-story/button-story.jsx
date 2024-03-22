@@ -13,30 +13,33 @@ export default function ButtonAction(props) {
 
 		let data;
 
-		try {
-			for (let i = -1; i < 5; i++) {
-				console.log("Calling: " + i);
-				const res = await fetch("http://localhost:8000/", {
-					method: "GET",
-					headers: { "Content-Type": "application/json" },
-				});
-				data = await res.json();
+		// try {
+		// 	for (let i = -1; i < 5; i++) {
+		// 		console.log("Calling: " + i);
+		// 		const res = await fetch("http://localhost:8000/", {
+		// 			method: "GET",
+		// 			headers: { "Content-Type": "application/json" },
+		// 		});
+		// 		data = await res.json();
 
-				const intervalId = setInterval(() => {
-					console.log(i + ". " + data.message[0] + ", " + data.message[1]);
-					props.setPrompt(data.message[0]);
-					props.setAnswers(data.message[1]);
-					clearInterval(intervalId);
-				}, 2500);
-			}
+		// 		const intervalId = setInterval(() => {
+		// 			console.log(i + ". " + data.message[0] + ", " + data.message[1]);
+		// 			props.setPrompt(data.message[0]);
+		// 			props.setAnswers(data.message[1]);
+		// 			clearInterval(intervalId);
+		// 		}, 2500);
+		// 	}
 
-		} catch (error) {
-			props.setIsError(true);
-			props.setPrompt("Oh no! Something went wrong. Please try again later");
-			setButtonText("Tell me a story");
-		}
+		// } catch (error) {
+		// 	props.setIsError(true);
+		// 	props.setPrompt("Oh no! Something went wrong. Please try again later");
+		// 	setButtonText("Tell me a story");
+		// }
 
-		props.goToStoryPage(data.message[2]);
+
+
+		// props.goToStoryPage(data.message[2]);
+		props.goToStoryPage(["Anne","Paris","Badminton","waterpark","rainy"]);
 	};
 
 	return (
