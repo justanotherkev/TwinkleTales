@@ -4,7 +4,7 @@ from sumy.summarizers.lsa import LsaSummarizer
 # from textblob import TextBlob
 
 
-def storySummerizer(story):
+def story_summerizer(story):
     
     parser = PlaintextParser.from_string(story, Tokenizer("english"))
 

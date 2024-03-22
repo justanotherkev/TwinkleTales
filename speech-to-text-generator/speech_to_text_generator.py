@@ -1,4 +1,4 @@
-main.py
+
 import re
 from fastapi import FastAPI
 from fastapi.middleware.cors import CORSMiddleware
@@ -206,7 +206,7 @@ answers = ["", "", "", "", ""]
 count = -1
 
 
-def speechToText():
+def speech_to_text():
     global count
     recognizer = stt.Recognizer()
     with stt.Microphone() as source:
@@ -256,7 +256,7 @@ def get_prompt():
                     speak(questions[0])
                     # print(questions[0])
 
-                speechToText()
+                speech_to_text()
                 # time.sleep(4)
                 # answers[0] = "David"
                 afterError = False
@@ -272,7 +272,7 @@ def get_prompt():
                     speak(questions[1])
                     # print(questions[1])
 
-                speechToText()
+                speech_to_text()
                 # time.sleep(4)
                 # answers[1] = "London"
                 afterError = False
@@ -290,7 +290,7 @@ def get_prompt():
                     speak(questions[2])
                     # print(questions[2])
 
-                speechToText()
+                speech_to_text()
                 # time.sleep(4)
                 # answers[2] = "Soccer"
                 afterError = False
@@ -309,7 +309,7 @@ def get_prompt():
                     speak(questions[3])
                     # print(questions[3])
 
-                speechToText()
+                speech_to_text()
                 # time.sleep(4)
                 # answers[3] = "in the park"
                 afterError = False
@@ -325,7 +325,7 @@ def get_prompt():
                     speak(questions[4])
                     # print(questions[4])
 
-                speechToText()
+                speech_to_text()
                 # time.sleep(4)
                 # answers[4] = "sunny"
                 afterError = False
