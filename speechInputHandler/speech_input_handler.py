@@ -4,6 +4,7 @@ from fastapi.middleware.cors import CORSMiddleware
 import elevenlabs
 import speech_recognition as stt
 import time
+import audioread
 from sympy import false
 from textblob import TextBlob
 from pydantic import BaseModel
@@ -189,7 +190,7 @@ def speak(text1):
     )
     elevenlabs.play(tts)
 
-
+# generates narration into an audio file
 def generate_narration_audio_file(text1):
     print("[main.py] - generate_narration_audio_file() running...")
     tts = elevenlabs.generate(
@@ -200,18 +201,19 @@ def generate_narration_audio_file(text1):
         voice="Charlotte",
         api_key="d8613a6881457e59de8990ac407ee004",  # NEW API KEY
     )
-    with open("narration_audio.mp3", "wb") as audio_file:
+    file_path = "./speechInputHandler/narration_output.mp3"
+    with open(file_path, "wb") as audio_file:
         audio_file.write(tts)
     
-    # Add the timer finction here so that generate_narration_audio_file() can
-    # return the duration_per_image
-    # e.g. return duration_per_image()
-        
-    # duration_in_milli = duration_per_image("narration_audio.mp3")
+    return duration_per_image(file_path)
 
-    # return duration_in_milli
-
-
+# calculates the timestamp beetween images
+def duration_per_image(audio_file):
+    with audioread.audio_open(audio_file) as f:
+        duration_seconds = f.duration
+        duration_milliseconds = duration_seconds * 1000
+        duration_per_image = duration_milliseconds / 6
+    return duration_per_image
 
 answers = ["", "", "", "", ""]
 
