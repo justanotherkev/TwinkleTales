@@ -1,4 +1,5 @@
 import re
+import os
 from fastapi import FastAPI
 from fastapi.middleware.cors import CORSMiddleware
 import elevenlabs
@@ -8,6 +9,8 @@ import audioread
 from sympy import false
 from textblob import TextBlob
 from pydantic import BaseModel
+from dotenv import load_dotenv
+load_dotenv()
 
 
 def extract_nouns(text):
@@ -185,7 +188,7 @@ def speak(text1):
     tts = elevenlabs.generate(
         text=text1,
         voice="Charlotte",
-        api_key="28ca29fa0c0c36dc92708c4a854a8fa1",  # NEW API KEY
+        api_key=os.getenv("ELEVEN_LABS_API"),  # NEW API KEY
     )
     elevenlabs.play(tts)
 
@@ -196,7 +199,7 @@ def generate_narration_audio_file(text1, file_path):
     tts = elevenlabs.generate(
         text=text1,
         voice="Charlotte",
-        api_key="28ca29fa0c0c36dc92708c4a854a8fa1",  # NEW API KEY
+        api_key=os.getenv("ELEVEN_LABS_API"),  # NEW API KEY
     )
     with open(file_path, "wb") as audio_file:
         audio_file.write(tts)
