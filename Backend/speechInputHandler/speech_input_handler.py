@@ -180,7 +180,7 @@ class State(BaseModel):
 
 
 def speak(text1):
-    print("[main.py] - speak() running...")
+    print("[speech_input_handler.py] - speak() running...")
     # print(text1)
     tts = elevenlabs.generate(
         text=text1,
@@ -192,7 +192,7 @@ def speak(text1):
 
 # generates narration into an audio file
 def generate_narration_audio_file(text1, file_path):
-    print("[main.py] - generate_narration_audio_file() running...")
+    print("[speech_input_handler.py] - generate_narration_audio_file() running...")
     tts = elevenlabs.generate(
         text=text1,
         voice="Charlotte",
@@ -209,6 +209,7 @@ def duration_per_image(audio_file_path):
         duration_milliseconds = duration_seconds * 1000
         duration_per_image = duration_milliseconds / 6
     return duration_per_image
+
 
 answers = ["", "", "", "", ""]
 

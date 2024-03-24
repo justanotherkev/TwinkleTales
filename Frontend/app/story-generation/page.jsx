@@ -161,7 +161,7 @@ export default function StoryGeneration({ searchParams }) {
 						<audio
 							className="audio-player-styles"
 							id="background-music-player"
-							controls={true}
+							controls={false}
 							src={selectedAudioUrl}
 							autoPlay={false}
 						/>
@@ -169,7 +169,7 @@ export default function StoryGeneration({ searchParams }) {
 						<audio
 							className="audio-player-styles"
 							id="narration-player"
-							controls={true}
+							controls={false}
 							src={narrationPath}
 							autoPlay={false}
 						/>
