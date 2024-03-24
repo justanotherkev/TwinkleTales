@@ -6,7 +6,7 @@ export default function GetStartedBox() {
 		<div className={s.get_started_box}>
 			<div className={s.text}>
 				<h2>Get started</h2>
-				<p>Explore captivating stories tailored to your child's imagination</p>
+				<p>Explore captivating stories tailored to your child&apos;s imagination</p>
 			</div>
 
 			<div className={s.actions}>

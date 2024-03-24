@@ -32,10 +32,12 @@ export default function StoryImageBox(props) {
 								<h2 className={s.title}>
 									Your story will be <br /> ready in a few minutes!
 								</h2>
-								<img
+								<Image
 									className={s.loading_arrows}
-									src="/loading-arrows.svg"
-									alt=""
+									src={"/loading-arrows.svg"}
+									alt={"Loading arrows"}
+									height={80}
+									width={80}
 								/>
 							</>
 						)}

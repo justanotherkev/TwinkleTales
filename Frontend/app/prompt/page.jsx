@@ -7,6 +7,7 @@ import { useState } from "react";
 import { useRouter } from "next/navigation";
 import React from "react";
 import { SignedIn, SignedOut, UserButton } from "@clerk/nextjs";
+import Image from "next/image";
 
 export default function Prompt() {
 	const [prompt, setPrompt] = useState("");
@@ -64,10 +65,10 @@ export default function Prompt() {
 				onTouchStart={handleHover}
 				onTouchEnd={handleHover}
 			>
-				<img className={s.question_mark} src="/question-mark.svg" alt="" />
+				<Image className={s.question_mark} height={20} width={20} src="/question-mark.svg" alt="" />
 			</div>
 			<div className={`${s.tutorial_details} ${isHidden ? s.hidden : ""}`}>
-				1. Click the "Tell me a story" button
+				1. Click the &quot;Tell me a story&quot; button
 				<br />
 				2. Wait for the prompt
 				<br />

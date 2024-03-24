@@ -23,20 +23,21 @@ def generate_images(prompts):
             count_break += 1
             print("\n[image_gen.py] - Error generating images", e)
             continue
-    #  Return some backup images instead of no images at all
-    
+    # images = [
+    #     "https://replicate.delivery/pbxt/3kDtTlgo2CILA5FHkcSXZe2pHZwX0LIZjFY9qVotcfp3DgjSA/out-0.png",
+    #     "https://replicate.delivery/pbxt/2ewrv40HB6xSS6OrukTWufaiBdhqyQ5ET9I9Y717K5KFEgjSA/out-0.png",
+    #     "https://replicate.delivery/pbxt/ZeavYRHTmsSCCCRGpOmkuAtUJYJSGuf9cRMCecKpuQ5kIAHlA/out-0.png",
+    #     "https://replicate.delivery/pbxt/Yh8nvPmHhuKHFR9V5BfmfYUVVDEDf8Js6st2aApS798jJAHlA/out-0.png",
+    #     "https://replicate.delivery/pbxt/quQ0c6uJrxJCABCFnweGXzcbM4cKQc6VlLyU3obc8pHiCwRJA/out-0.png",
+    #     "https://replicate.delivery/pbxt/AGzQ3pI4OxKYPJGE4SL0TJggbyYUwfvg4WcRPfD7YNPhfAHlA/out-0.png",
+    # ]
+
+    # for image in images:
+    #     image_URLs.append(image)
 
 
 def return_urls():
-    return image_URLs
-
-    # image_URLs = [
-    #     "https://replicate.delivery/pbxt/oNZuusE1FNpvDFuGUYGASOXP6hMPqySWadBKgOPGTAgSdtoE/out-0.png",
-    #     "https://replicate.delivery/pbxt/RUkVneea9eHjipkSzCbyWypY5lnFIPzOazm2dlZTGEquqrFlA/out-0.png",
-    #     "https://replicate.delivery/pbxt/nlrmxM6TDnZwHp8rGw4NfQK75ExxN1K16RVUNR6V0Sox6aRJA/out-0.png",
-    #     "https://replicate.delivery/pbxt/n8701TPRefjSfprYWk1yeQzOWV9rI7pehF2DTNbb3ufXcdtoE/out-0.png",
-    #     "https://replicate.delivery/pbxt/VeW1tZxb9M3Dcak62Z3VZZZzfbKehd4Pa86oOyDyzqE8rrFlA/out-0.png",
-    #     "https://replicate.delivery/pbxt/amXw8ytaDwI5MFQkEVHZUfUtCfP3XuoCXqSNm6pP2hbN21iSA/out-0.png",
-    # ]
-
-    # return image_URLs
+    global image_URLs
+    final_image_list = image_URLs
+    image_URLs = []
+    return final_image_list

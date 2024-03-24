@@ -20,15 +20,46 @@ export default function StoryGeneration({ searchParams }) {
 	const router = useRouter();
 	const firstRender = useRef(true);
 	const [narrationPath, setNarrationPath] = useState("");
-	let intervalId;
 
 	// Sends the speech prompts to the integration file upon a page load/reload
 	useEffect(() => {
+		// Sends prompts to integration.py
+		// Receives image URLs from integration.py
+		// Passes URLs to getNarration
+		const sendSpeechPrompts = async () => {
+			const answers = searchParams.data;
+			console.log("answers:" + answers);
+			try {
+				console.log("Sending the output page data");
+				const res = await fetch("http://localhost:8001/", {
+					method: "POST",
+					headers: { "Content-Type": "application/json" },
+					body: JSON.stringify(answers),
+				});
+				console.log("Post request was sent");
+				const data = await res.json();
+				console.log("Data received");
+				console.log(data.message);
+				console.log(data.message[0]);
+				console.log(data.message[1]);
+				console.log(data.message[2]);
+				setImageSourceList(data.message[0]);
+				setImageDuration(data.message[1]);
+				setSelectedAudioUrl(data.message[2]);
+				setNarrationPath("/narration_audio.mp3");
+				setPlayMusic(true);
+				setEnabled(true);
+			} catch {
+				console.log("Something went wrong while sending the data.");
+				setError(true);
+				setEnabled(true);
+			}
+		};
 		if (searchParams.data !== undefined) {
 			sendSpeechPrompts();
 			console.log("Got answers: " + searchParams.data);
 		}
-	}, []);
+	}, [searchParams.data]);
 
 	// useEffect to be triggered only when the state changes
 	//Plays the music automatically
@@ -40,9 +71,32 @@ export default function StoryGeneration({ searchParams }) {
 		const backgroundMusic = document.getElementById("background-music-player");
 		const narration = document.getElementById("narration-player");
 
+		// Displays each image in the imageList for a set duration
+		const showImages = () => {
+			let i = 1;
+			console.log("Source list length: " + imageSourceList.length);
+			console.log("Image duration: " + imageDuration);
+
+			//displays the first image immediatley
+			setCurrentImage(imageSourceList[0]);
+			const intervalId = setInterval(() => {
+				if (i < imageSourceList.length) {
+					console.log("Current image " + i + ": " + imageSourceList[i]);
+					setCurrentImage(imageSourceList[i]);
+					i++;
+				} else {
+					setCurrentImage();
+					setEnd(true);
+					setPlayMusic(false);
+					clearInterval(intervalId);
+				}
+			}, imageDuration);
+		};
+
 		if (playMusic) {
 			console.log("Starting everything...");
 			showImages();
+			backgroundMusic.volume = 0.2;
 			backgroundMusic.play();
 			narration.play();
 		} else {
@@ -50,61 +104,7 @@ export default function StoryGeneration({ searchParams }) {
 			backgroundMusic.pause();
 			narration.pause();
 		}
-	}, [playMusic]);
-
-	// Displays each image in the imageList for a set duration
-	const showImages = () => {
-		let i = 1;
-		console.log("Source list length: " + imageSourceList.length);
-		console.log("Image duration: " + imageDuration);
-
-		//displays the first image immediatley
-		setCurrentImage(imageSourceList[0]);
-		intervalId = setInterval(() => {
-			if (i < imageSourceList.length) {
-				console.log("Current image " + i + ": " + imageSourceList[i]);
-				setCurrentImage(imageSourceList[i]);
-				i++;
-			} else {
-				setCurrentImage();
-				setEnd(true);
-				setPlayMusic(false);
-				clearInterval(intervalId);
-			}
-		}, imageDuration);
-	};
-
-	// Sends prompts to integration.py
-	// Receives image URLs from integration.py
-	// Passes URLs to getNarration
-	const sendSpeechPrompts = async () => {
-		const answers = searchParams.data;
-		console.log("answers:" + answers);
-		try {
-			console.log("Sending the output page data");
-			const res = await fetch("http://localhost:8001/", {
-				method: "POST",
-				headers: { "Content-Type": "application/json" },
-				body: JSON.stringify(answers),
-			});
-			console.log("Post request was sent");
-			const data = await res.json();
-			console.log("Data received");
-			console.log(data.message);
-			console.log(data.message[0]);
-			console.log(data.message[1]);
-			console.log(data.message[2]);
-			setImageSourceList(data.message[0]);
-			setImageDuration(data.message[1]);
-			setSelectedAudioUrl(data.message[2]);
-			setNarrationPath("/narration_audio.mp3");
-			setPlayMusic(true);
-			setEnabled(true);
-		} catch {
-			console.log("Something went wrong while sending the data.");
-			setError(true);
-		}
-	};
+	}, [playMusic, imageDuration, imageSourceList]);
 
 	//Navigates to the prompt page when New Story button is clicked.
 	const goToPromptPage = () => {
@@ -123,8 +123,6 @@ export default function StoryGeneration({ searchParams }) {
 						enabled={enabled}
 					/>
 
-					{/* <button onClick={sendSpeechPrompts}>send speech prompts</button> */}
-
 					<audio
 						className="audio-player-styles"
 						id="background-music-player"
@@ -139,10 +137,7 @@ export default function StoryGeneration({ searchParams }) {
 						controls={true}
 						src={narrationPath}
 						autoPlay={false}
-						volume={0.5}
 					/>
-
-					{/* <button onClick={stopImages}>Stop images</button> */}
 				</>
 			}
 		/>
