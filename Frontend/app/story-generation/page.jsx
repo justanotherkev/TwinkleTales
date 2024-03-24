@@ -4,7 +4,8 @@ import PageComponent2 from "../../components/page-component-2/page-component-2.j
 import StoryImageBox from "@/components/story-image-box/story-image-box.jsx";
 import BackButton from "@/components/back-button/back-button.jsx";
 import { useRouter } from "next/navigation.js";
-import { headers } from "next/headers.js";
+import EmptyStoryBox from "@/components/empty-story-box/empty-story-box.jsx";
+import EmptyBackButton from "@/components/empty-back-button/empty-back-button.jsx";
 
 export default function StoryGeneration({ searchParams }) {
 	const [imageSourceList, setImageSourceList] = useState([]);
@@ -13,6 +14,8 @@ export default function StoryGeneration({ searchParams }) {
 	const [error, setError] = useState(false);
 
 	const [enabled, setEnabled] = useState(false);
+
+	const [noParams, setNoParams] = useState(true);
 
 	const [playMusic, setPlayMusic] = useState(false);
 	const [selectedAudioUrl, setSelectedAudioUrl] = useState("");
@@ -57,6 +60,7 @@ export default function StoryGeneration({ searchParams }) {
 		};
 		if (searchParams.data !== undefined) {
 			sendSpeechPrompts();
+			setNoParams(false);
 			console.log("Got answers: " + searchParams.data);
 		}
 	}, [searchParams.data]);
@@ -77,6 +81,20 @@ export default function StoryGeneration({ searchParams }) {
 			console.log("Source list length: " + imageSourceList.length);
 			console.log("Image duration: " + imageDuration);
 
+			const fadeOutBackgroundMusic = () => {
+				const fadeInterval = setInterval(() => {
+					const currentVolume = backgroundMusic.volume;
+
+					const newVolume = currentVolume - 0.01;
+
+					backgroundMusic.volume = newVolume;
+
+					if (newVolume <= 0) {
+						clearInterval(fadeInterval);
+					}
+				}, 100);
+			};
+
 			//displays the first image immediatley
 			setCurrentImage(imageSourceList[0]);
 			const intervalId = setInterval(() => {
@@ -85,12 +103,16 @@ export default function StoryGeneration({ searchParams }) {
 					setCurrentImage(imageSourceList[i]);
 					i++;
 				} else {
-					setCurrentImage();
-					setEnd(true);
-					setPlayMusic(false);
-					clearInterval(intervalId);
+					const closingInterval = setInterval(() => {
+						setCurrentImage();
+						setEnd(true);
+						setPlayMusic(false);
+						clearInterval(intervalId);
+						clearInterval(closingInterval);
+					}, 2000);
 				}
 			}, imageDuration);
+			console.log("Final volume: " + backgroundMusic.volume);
 		};
 
 		if (playMusic) {
@@ -111,35 +133,49 @@ export default function StoryGeneration({ searchParams }) {
 		router.push("/prompt");
 	};
 
-	return (
-		<PageComponent2
-			src={"/story-reading-img.png"}
-			component={
-				<>
-					<StoryImageBox src={currentImage} end={end} error={error} />
-					<BackButton
-						setPlayMusic={setPlayMusic}
-						goToPromptPage={goToPromptPage}
-						enabled={enabled}
-					/>
+	if (noParams) {
+		return (
+			<PageComponent2
+				src={"/story-reading-img.png"}
+				component={
+					<>
+						<EmptyStoryBox />
+						<EmptyBackButton goToPromptPage={goToPromptPage} />
+					</>
+				}
+			/>
+		);
+	} else {
+		return (
+			<PageComponent2
+				src={"/story-reading-img.png"}
+				component={
+					<>
+						<StoryImageBox src={currentImage} end={end} error={error} />
+						<BackButton
+							setPlayMusic={setPlayMusic}
+							goToPromptPage={goToPromptPage}
+							enabled={enabled}
+						/>
 
-					<audio
-						className="audio-player-styles"
-						id="background-music-player"
-						controls={false}
-						src={selectedAudioUrl}
-						autoPlay={false}
-					/>
+						<audio
+							className="audio-player-styles"
+							id="background-music-player"
+							controls={true}
+							src={selectedAudioUrl}
+							autoPlay={false}
+						/>
 
-					<audio
-						className="audio-player-styles"
-						id="narration-player"
-						controls={false}
-						src={narrationPath}
-						autoPlay={false}
-					/>
-				</>
-			}
-		/>
-	);
+						<audio
+							className="audio-player-styles"
+							id="narration-player"
+							controls={true}
+							src={narrationPath}
+							autoPlay={false}
+						/>
+					</>
+				}
+			/>
+		);
+	}
 }
