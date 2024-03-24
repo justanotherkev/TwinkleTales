@@ -35,8 +35,12 @@ def individual_serial(storygen) -> dict:
     }
 
 
-def list_serial(storygens) -> list:
-    return [individual_serial(storygen) for storygen in storygens]
+# def list_serial(storygens) -> list:
+#     return [individual_serial(storygen) for storygen in storygens]
+
+
+def list_serial() -> list:
+    return [individual_serial(storygen) for storygen in collection_name.find()]
 
 
 app = FastAPI()
@@ -54,9 +58,9 @@ app.add_middleware(
 
 
 @app.get("/")
-async def story_gen():
-    storygen = list_serial(collection_name.find())
-    return {"message": storygen}
+async def audio_URLs():
+    urls = list_serial(collection_name.find())
+    return {"message": urls}
 
 
 # @app.get("/start")

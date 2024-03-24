@@ -7,127 +7,64 @@ import { useRouter } from "next/navigation.js";
 import { headers } from "next/headers.js";
 
 export default function StoryGeneration({ searchParams }) {
+
 	const [imageSourceList, setImageSourceList] = useState([]);
 	const [currentImage, setCurrentImage] = useState();
 	const [end, setEnd] = useState(false);
-	const [playStory, setPlayStory] = useState(false);
-
-	const [answers, setAnswers] = useState("Answers will show here");
 	const [playMusic, setPlayMusic] = useState(false);
-	const audioUrl =
-		"https://utfs.io/f/e7c7db5e-a02e-48b9-b7c1-d9e10c91bfec-xnnced.mp3";
-	const [selectedAudioIndex, setSelectedAudioIndex] = useState(0);
-	const [audioUrls, setAudioUrls] = useState([]);
+	const [selectedAudioUrl, setSelectedAudioUrl] = useState("");
+	const [imageDuration, setImageDuration] = useState();
+	const router = useRouter();
 	const firstRender = useRef(true);
+	const [narrationPath,setNarrationPath] = useState("");
 
-	// Runs
+
+	// Upon a page load/reload sending the speech prompts to the integration file
+	useEffect(() => {
+		sendSpeechPrompts()
+	}, []);
+
+	// Put it inside a use effect to be triggered only when the state changes 
+	//To play the music automaitically
 	useEffect(() => {
 		if (firstRender.current) {
 			firstRender.current = false;
 			return;
 		}
-		showImages(imageSourceList);
-		getNarration();
-	}, [playStory]);
-
-	const router = useRouter();
-
-	// Fetching all the audio URLs from the database upon a page load/reload.
-	// useEffect(() => {
-	// 	fetchAudioUrls();
-	// }, []);
-
-	// Randomly pick a audio Url from the audioUrls variable
-	// useEffect(() => {
-	// 	if (audioUrls.length > 0) {
-	// 	  const randomIndex = Math.floor(Math.random() * audioUrls.length);
-	// 	  setSelectedAudioIndex(randomIndex);
-	// 	}
-	// }, [audioUrls]);
-
-	// Upon a page load/reload sending the speech prompts to the integration file
-	useEffect(() => {
-		console.log(searchParams.data);
-		// sendSpeechPrompts()
-	}, []);
-
-	// Upon a page load/reload play the narration from the integration file
-	// useEffect(() => {
-	// 	getNarration();
-	// })
-
-	// Fetch request for getting the audio URLs from the database
-	const fetchAudioUrls = async () => {
-		console.log("Fetching audio URLs...");
-		try {
-			//Chnage port 8000 to sm else cause main.py is on port 8000
-			const response = await fetch("http://localhost:8002/", {
-				method: "GET",
-				headers: { "Content-Type": "application/json" },
-			});
-			console.log("Fetch complete");
-
-			const data = await response.json();
-			console.log("Fetched audio URLs:", data);
-			setAudioUrls(data.message); // Set the audio URLs from the fetched data
-		} catch (error) {
-			console.error("Error fetching audio URLs:", error);
+		const audioElement = document.getElementById("audio-player");
+		const narrationElement = document.getElementById("narration-player");
+		if (playMusic) {
+			audioElement.play()
+			narrationElement.play()
+			showImages();
 		}
-	};
+		else {
+			audioElement.pause()
+		}
+	}, [playMusic]);
 
-	const selectedAudioUrl =
-		audioUrls.length > 0 ? audioUrls[selectedAudioIndex].audio_url : "";
 
-	//To play the music upon the button click
-	const handleClick = () => {
-		// setPlayMusic(true);
-	};
-
-	//To play the music
-	// const audioElement = document.getElementById("audio-player");
-	// if (playMusic) {
-	// 	audioElement.play()
-	// }
 
 	// Displays each image in the imageList for a set duration
-	const showImages = (imageList) => {
+	const showImages = () => {
 		let i = 0;
-		console.log(imageList.length);
+		console.log(imageSourceList.length);
 
-		// Replace the function below with Kishon's timer
 		const intervalId = setInterval(() => {
-			if (i >= imageList.length) {
+			if (i < imageSourceList.length) {
+				console.log("Current image: " + imageSourceList[i]);
+				setCurrentImage(imageSourceList[i]);
+				i++;
+			} else {
 				setCurrentImage();
 				setEnd(true);
+				setPlayMusic(false);
 				clearInterval(intervalId); // stop the interval
-			} else {
-				console.log("Current image: " + imageList[i]);
-				setCurrentImage(imageList[i]);
-				i++;
 			}
-		}, 4000);
+		}, imageDuration);
 	};
 
-	// Sends a get request to integration.py
-	// Triggers the audio to play and images to show upon return message from integration.py
-	const getNarration = async () => {
-		try {
-			console.log("Getting narration....");
-			const res = await fetch("http://localhost:8001/", {
-				method: "GET",
-				headers: { "Content-Type": "application/json" },
-			});
-			const data = await res.json();
-			console.log(
-				"Return from integration.py - get_narration() " + data.message
-			);
-		} catch (Error) {
-			console.log(
-				"Error sending get request to integration.py get_narration()."
-			);
-			console.error("The error: ", Error);
-		}
-	};
+	
 
 	// Sends prompts to integration.py
 	// Receives image URLs from integration.py
@@ -144,16 +81,18 @@ export default function StoryGeneration({ searchParams }) {
 			});
 			console.log("Post request was sent");
 			const data = await res.json();
-			console.log("Images received");
+			console.log("Data received");
 			console.log(data.message);
-			setImageSourceList(data.message);
-
-			if (data.message) {
-				setPlayStory(true);
-			} else {
-				console.log("No response from integration.py get_narration()");
-			}
-
+			console.log(data.message[0])
+			console.log(data.message[1])
+			console.log(data.message[2])
+			setImageSourceList(data.message[0]);
+			setImageDuration(data.message[1]);
+			setSelectedAudioUrl(data.message[2]);
+			setNarrationPath("narration_output.mp3")
+			// setNarrationPath("E:\\IIT studies\\2 ND YEAR MATERIAL\\SDGP\\TwinkleTales\\narration_output.mp3")
+			setPlayMusic(true)
+			
 		} catch {
 			console.log("Something went wrong while sending the data.");
 		}
@@ -172,17 +111,25 @@ export default function StoryGeneration({ searchParams }) {
 					<StoryImageBox src={currentImage} end={end} />
 					<BackButton goToPromptPage={goToPromptPage} />
 
-					<button onClick={sendSpeechPrompts}>send speech prompts</button>
-					{/* <button onClick={getNarration}>get narration</button> */}
+					{/* <button onClick={sendSpeechPrompts}>send speech prompts</button> */}
 
-					{/* <audio
+
+					<audio
 						className="audio-player-styles"
 						id="audio-player"
 						controls={true}
 						src={selectedAudioUrl}
 						autoPlay
-					/> */}
-					{/* <button onClick={getNarration}>.</button> */}
+					/>
+
+					<audio
+						className="audio-player-styles"
+						id="narration-player"
+						controls={true}
+						src={narrationPath}
+						autoPlay
+					/>
+
 				</>
 			}
 		/>

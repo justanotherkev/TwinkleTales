@@ -185,13 +185,13 @@ def speak(text1):
     tts = elevenlabs.generate(
         text=text1,
         voice="Charlotte",
-        api_key="ac764488fbfd187d77d484e08b31293a",  # PAID API KEY
+        api_key="def3a10784ee99eb7f314ebe94f32f8b",  # PAID API KEY
         # text=text1, voice="Charlotte", api_key="d8613a6881457e59de8990ac407ee004" # NEW API KEY
     )
     elevenlabs.play(tts)
 
 # generates narration into an audio file
-def generate_narration_audio_file(text1):
+def generate_narration_audio_file(text1,file_path):
     print("[main.py] - generate_narration_audio_file() running...")
     tts = elevenlabs.generate(
         # text=text1,
@@ -199,17 +199,15 @@ def generate_narration_audio_file(text1):
         # api_key="ac764488fbfd187d77d484e08b31293a",  # PAID API KEY
         text=text1,
         voice="Charlotte",
-        api_key="d8613a6881457e59de8990ac407ee004",  # NEW API KEY
+        api_key="def3a10784ee99eb7f314ebe94f32f8b",  # Paid API KEY
     )
-    file_path = "./speechInputHandler/narration_output.mp3"
     with open(file_path, "wb") as audio_file:
         audio_file.write(tts)
     
-    return duration_per_image(file_path)
 
 # calculates the timestamp beetween images
-def duration_per_image(audio_file):
-    with audioread.audio_open(audio_file) as f:
+def duration_per_image(audio_file_path):
+    with audioread.audio_open(audio_file_path) as f:
         duration_seconds = f.duration
         duration_milliseconds = duration_seconds * 1000
         duration_per_image = duration_milliseconds / 6

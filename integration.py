@@ -1,3 +1,4 @@
+import random
 from storyGenerator.story_gen import story_generator
 from storySummerizer.summerizer import story_summerizer
 from imageGenerator.image_gen import generate_images
@@ -6,6 +7,10 @@ from speechInputHandler.speech_input_handler import generate_narration_audio_fil
 from fastapi import FastAPI, Request
 from fastapi.middleware.cors import CORSMiddleware
 from dotenv import load_dotenv
+from speechInputHandler.speech_input_handler import generate_narration_audio_file
+from speechInputHandler.speech_input_handler import duration_per_image
+from databaseAPI.database import list_serial
+
 
 story_app = FastAPI()
 
@@ -22,8 +27,6 @@ story_app.add_middleware(
 
 load_dotenv()
 
-story = ""
-
 
 # Post method to recive the prompts for the story generation
 @story_app.post("/")
@@ -33,18 +36,16 @@ async def start_content_generation(request: Request):
     return {"message": set_output(list_str)}
 
 
-# Get the method for the story narration
-@story_app.get("/")
-def get_narration():
-    print("\n[integration.py] - get_narration() running...")
-    global story
-    generate_narration_audio_file(story)
-    return {"message": "OK"}
-
-
+# Inside this function all the functions nessersary for story gen, image gen and 
 def set_output(speech_inputs):
-    global story
+
     story = story_generator(speech_inputs)
+
+    # Creates the mp3 file containing the narration
+    generate_narration_audio_file(story,"narration_output.mp3")
+
+    # Call the function to get the duration one image should last
+    time_per_image = duration_per_image("narration_output.mp3")
 
     sentences = story_summerizer(story)
 
@@ -58,10 +59,30 @@ def set_output(speech_inputs):
         i = i + ending
         image_prompts.append(i)
     
-    print("\n[integration.py] - Image prompts", image_prompts)
-    global images
+    # print("\n[integration.py] - Image prompts", image_prompts)
+ 
     generate_images(image_prompts)
     images = return_urls()
     print("\n[integration.py] - Received images", images)
 
-    return images
+    randomUrl = get_random_audio_url()
+
+    return [images, time_per_image,randomUrl]
+
+
+def get_random_audio_url():
+    all_audio_urls = list_serial()
+
+    print("The audio URLs being fetched from the DB: ",all_audio_urls)
+    if len(all_audio_urls) > 0:
+        random_index = random.randint(0, len(all_audio_urls) - 1)
+        randomdict =  all_audio_urls[random_index]
+        return randomdict["audio_url"]
+    else:
+        print("No audio files found")
+
+
+
+
+
+        
