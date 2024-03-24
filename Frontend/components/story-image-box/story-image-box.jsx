@@ -4,7 +4,7 @@ import Image from "next/image";
 
 export default function StoryImageBox(props) {
 	if (props.src) {
-		console.log("props.src: " + props.src)
+		console.log("props.src: " + props.src);
 		return (
 			<div className={s.story_image_box}>
 				<Image
@@ -12,6 +12,7 @@ export default function StoryImageBox(props) {
 					width={750}
 					height={750}
 					className={s.story_images}
+					alt={"Story images"}
 				/>
 			</div>
 		);
@@ -22,14 +23,22 @@ export default function StoryImageBox(props) {
 					<h2 className={s.title}>The end!</h2>
 				) : (
 					<>
-						<h2 className={s.title}>
-							Your story is <br /> almost ready!
-						</h2>
-						<img
-							className={s.loading_arrows}
-							src="/loading-arrows.svg"
-							alt=""
-						/>
+						{props.error ? (
+							<h2 className={s.title}>
+								Oh no! <br /> Something went wrong <br /> Please try a new story
+							</h2>
+						) : (
+							<>
+								<h2 className={s.title}>
+									Your story will be <br /> ready in a few minutes!
+								</h2>
+								<img
+									className={s.loading_arrows}
+									src="/loading-arrows.svg"
+									alt=""
+								/>
+							</>
+						)}
 					</>
 				)}
 			</div>

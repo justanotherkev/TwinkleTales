@@ -41,11 +41,13 @@ def set_output(speech_inputs):
 
     story = story_generator(speech_inputs)
 
+    audio_file_path = "./Frontend/public/narration_audio.mp3"
+
     # Creates the mp3 file containing the narration
-    generate_narration_audio_file(story,"narration_output.mp3")
+    generate_narration_audio_file(story,audio_file_path)
 
     # Call the function to get the duration one image should last
-    time_per_image = duration_per_image("narration_output.mp3")
+    time_per_image = duration_per_image(audio_file_path)
 
     sentences = story_summerizer(story)
 

@@ -30,42 +30,42 @@ export default function ButtonAction(props) {
 
 		let data;
 
-		// try {
-		// 	for (let i = -1; i < 5; i++) {
-		// 		console.log("Calling: " + i);
-		// 		const res = await fetch(endpoint, {
-		// 			method: "GET",
-		// 			headers: { "Content-Type": "application/json" },
-		// 		});
-		// 		data = await res.json();
+		try {
+			for (let i = -1; i < 5; i++) {
+				console.log("Calling: " + i);
+				const res = await fetch(endpoint, {
+					method: "GET",
+					headers: { "Content-Type": "application/json" },
+				});
+				data = await res.json();
 
-		// 		const intervalId = setInterval(() => {
-		// 			console.log(i + ". " + data.message[0] + ", " + data.message[1]);
-		// 			props.setPrompt(data.message[0]);
-		// 			props.setAnswers(data.message[1]);
-		// 			clearInterval(intervalId);
-		// 		}, 2500);
-		// 	}
-		// } catch (error) {
-		// 	props.setIsError(true);
-		// 	props.setPrompt("Oh no! Something went wrong. Please try again later");
-		// 	setButtonText("Tell me a story");
-		// }
+				const intervalId = setInterval(() => {
+					console.log(i + ". " + data.message[0] + ", " + data.message[1]);
+					props.setPrompt(data.message[0]);
+					props.setAnswers(data.message[1]);
+					clearInterval(intervalId);
+				}, 2500);
+			}
+		} catch (error) {
+			props.setIsError(true);
+			props.setPrompt("Oh no! Something went wrong. Please try again later");
+			setButtonText("Tell me a story");
+		}
 
-		// if (data !== undefined) {
-		// 	if (data.message[2] !== undefined) {
-		// 		props.goToStoryPage(data.message[2]);
-		// 	} else {
-		// 		props.setIsError(true);
-		// 		props.setPrompt("Oh no! Something went wrong. Please try again later");
-		// 		setButtonText("Tell me a story");
-		// 	}
-		// } else {
-		// 	props.setIsError(true);
-		// 	props.setPrompt("Oh no! Something went wrong. Please try again later");
-		// 	setButtonText("Tell me a story");
-		// }
-		props.goToStoryPage(["Anne", "Paris", "Badminton", "school", "Sunny"]);
+		if (data !== undefined) {
+			if (data.message[2] !== undefined) {
+				props.goToStoryPage(data.message[2]);
+			} else {
+				props.setIsError(true);
+				props.setPrompt("Oh no! Something went wrong. Please try again later");
+				setButtonText("Tell me a story");
+			}
+		} else {
+			props.setIsError(true);
+			props.setPrompt("Oh no! Something went wrong. Please try again later");
+			setButtonText("Tell me a story");
+		}
+		// props.goToStoryPage(["Kevin", "Colombo", "Basketball", "school", "rainy"]);
 	};
 
 	return (

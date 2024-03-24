@@ -7,64 +7,72 @@ import { useRouter } from "next/navigation.js";
 import { headers } from "next/headers.js";
 
 export default function StoryGeneration({ searchParams }) {
-
 	const [imageSourceList, setImageSourceList] = useState([]);
 	const [currentImage, setCurrentImage] = useState();
 	const [end, setEnd] = useState(false);
+	const [error, setError] = useState(false);
+
+	const [enabled, setEnabled] = useState(false);
+
 	const [playMusic, setPlayMusic] = useState(false);
 	const [selectedAudioUrl, setSelectedAudioUrl] = useState("");
 	const [imageDuration, setImageDuration] = useState();
 	const router = useRouter();
 	const firstRender = useRef(true);
-	const [narrationPath,setNarrationPath] = useState("");
+	const [narrationPath, setNarrationPath] = useState("");
+	let intervalId;
 
-
-	// Upon a page load/reload sending the speech prompts to the integration file
+	// Sends the speech prompts to the integration file upon a page load/reload
 	useEffect(() => {
-		sendSpeechPrompts()
+		if (searchParams.data !== undefined) {
+			sendSpeechPrompts();
+			console.log("Got answers: " + searchParams.data);
+		}
 	}, []);
 
-	// Put it inside a use effect to be triggered only when the state changes 
-	//To play the music automaitically
+	// useEffect to be triggered only when the state changes
+	//Plays the music automatically
 	useEffect(() => {
 		if (firstRender.current) {
 			firstRender.current = false;
 			return;
 		}
-		const audioElement = document.getElementById("audio-player");
-		const narrationElement = document.getElementById("narration-player");
+		const backgroundMusic = document.getElementById("background-music-player");
+		const narration = document.getElementById("narration-player");
+
 		if (playMusic) {
-			audioElement.play()
-			narrationElement.play()
+			console.log("Starting everything...");
 			showImages();
-		}
-		else {
-			audioElement.pause()
+			backgroundMusic.play();
+			narration.play();
+		} else {
+			console.log("Stopping everything...");
+			backgroundMusic.pause();
+			narration.pause();
 		}
 	}, [playMusic]);
 
-
-
 	// Displays each image in the imageList for a set duration
 	const showImages = () => {
-		let i = 0;
-		console.log(imageSourceList.length);
+		let i = 1;
+		console.log("Source list length: " + imageSourceList.length);
+		console.log("Image duration: " + imageDuration);
 
-		const intervalId = setInterval(() => {
+		//displays the first image immediatley
+		setCurrentImage(imageSourceList[0]);
+		intervalId = setInterval(() => {
 			if (i < imageSourceList.length) {
-				console.log("Current image: " + imageSourceList[i]);
+				console.log("Current image " + i + ": " + imageSourceList[i]);
 				setCurrentImage(imageSourceList[i]);
 				i++;
 			} else {
 				setCurrentImage();
 				setEnd(true);
 				setPlayMusic(false);
-				clearInterval(intervalId); // stop the interval
+				clearInterval(intervalId);
 			}
 		}, imageDuration);
 	};
-
-	
 
 	// Sends prompts to integration.py
 	// Receives image URLs from integration.py
@@ -83,18 +91,18 @@ export default function StoryGeneration({ searchParams }) {
 			const data = await res.json();
 			console.log("Data received");
 			console.log(data.message);
-			console.log(data.message[0])
-			console.log(data.message[1])
-			console.log(data.message[2])
+			console.log(data.message[0]);
+			console.log(data.message[1]);
+			console.log(data.message[2]);
 			setImageSourceList(data.message[0]);
 			setImageDuration(data.message[1]);
 			setSelectedAudioUrl(data.message[2]);
-			setNarrationPath("narration_output.mp3")
-			// setNarrationPath("E:\\IIT studies\\2 ND YEAR MATERIAL\\SDGP\\TwinkleTales\\narration_output.mp3")
-			setPlayMusic(true)
-			
+			setNarrationPath("/narration_audio.mp3");
+			setPlayMusic(true);
+			setEnabled(true);
 		} catch {
 			console.log("Something went wrong while sending the data.");
+			setError(true);
 		}
 	};
 
@@ -108,18 +116,21 @@ export default function StoryGeneration({ searchParams }) {
 			src={"/story-reading-img.png"}
 			component={
 				<>
-					<StoryImageBox src={currentImage} end={end} />
-					<BackButton goToPromptPage={goToPromptPage} />
+					<StoryImageBox src={currentImage} end={end} error={error} />
+					<BackButton
+						setPlayMusic={setPlayMusic}
+						goToPromptPage={goToPromptPage}
+						enabled={enabled}
+					/>
 
 					{/* <button onClick={sendSpeechPrompts}>send speech prompts</button> */}
 
-
 					<audio
 						className="audio-player-styles"
-						id="audio-player"
+						id="background-music-player"
 						controls={true}
 						src={selectedAudioUrl}
-						autoPlay
+						autoPlay={false}
 					/>
 
 					<audio
@@ -127,9 +138,11 @@ export default function StoryGeneration({ searchParams }) {
 						id="narration-player"
 						controls={true}
 						src={narrationPath}
-						autoPlay
+						autoPlay={false}
+						volume={0.5}
 					/>
 
+					{/* <button onClick={stopImages}>Stop images</button> */}
 				</>
 			}
 		/>
