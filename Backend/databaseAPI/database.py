@@ -1,5 +1,6 @@
 from re import A
-from fastapi import FastAPI, APIRouter
+from bson import ObjectId
+from fastapi import FastAPI, APIRouter, HTTPException
 from fastapi.middleware.cors import CORSMiddleware
 from pymongo import MongoClient
 from pydantic import BaseModel
@@ -59,16 +60,33 @@ app.add_middleware(
 
 @app.get("/")
 async def audio_URLs():
-    urls = list_serial(collection_name.find())
+    urls = list_serial()
     return {"message": urls}
-
-
-# @app.get("/start")
-# async def story_gen():
-#     storygen = list_serial(collection_name.find())
-#     return {"message": storygen}
 
 
 @app.post("/")
 async def post_storygen(storygen: Storygen):
     collection_name.insert_one(dict(storygen))
+
+
+@app.put("/{storygen_id}")
+async def update_storygen(storygen_id: str, updated_storygen: Storygen):
+    result = collection_name.update_one({"_id": ObjectId(storygen_id)}, {"$set": updated_storygen.dict()})
+    if result.modified_count == 0:
+        raise HTTPException(status_code=404, detail="Storygen not found")
+    return {"message": "Storygen updated successfully"}
+
+
+
+
+@app.delete("/{storygen_id}")
+async def delete_storygen(storygen_id: str):
+    try:
+        obj_id = ObjectId(storygen_id)
+    except Exception as e:
+        raise HTTPException(status_code=400, detail="Invalid ObjectId")
+
+    result = collection_name.delete_one({"_id": obj_id})
+    if result.deleted_count == 0:
+        raise HTTPException(status_code=404, detail="Storygen not found")
+    return {"message": "Storygen deleted successfully"}
