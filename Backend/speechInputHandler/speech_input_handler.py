@@ -227,7 +227,8 @@ def speech_to_text():
         audio = recognizer.listen(source)
         answer_raw = recognizer.recognize_google(audio)
         print("answer recieved")
-        # answers[count] = (extract_nouns(answer_raw))  # THIS NEEDS TO BE FIXED
+        if answer_raw in profanity_stop_words:
+            raise ValueError("Profanity detected in user input")
         answers[count] = answer_raw
         print(answers)
 
