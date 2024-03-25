@@ -5,6 +5,7 @@ from pprint import pprint
 image_URLs = []
 
 
+# Uses the Replicate API to generate 6 images
 def generate_images(prompts):
     count_break = 0
     while count_break < 5:
@@ -23,19 +24,8 @@ def generate_images(prompts):
             count_break += 1
             print("\n[image_gen.py] - Error generating images", e)
             continue
-    # images = [
-    #     "https://replicate.delivery/pbxt/3kDtTlgo2CILA5FHkcSXZe2pHZwX0LIZjFY9qVotcfp3DgjSA/out-0.png",
-    #     "https://replicate.delivery/pbxt/2ewrv40HB6xSS6OrukTWufaiBdhqyQ5ET9I9Y717K5KFEgjSA/out-0.png",
-    #     "https://replicate.delivery/pbxt/ZeavYRHTmsSCCCRGpOmkuAtUJYJSGuf9cRMCecKpuQ5kIAHlA/out-0.png",
-    #     "https://replicate.delivery/pbxt/Yh8nvPmHhuKHFR9V5BfmfYUVVDEDf8Js6st2aApS798jJAHlA/out-0.png",
-    #     "https://replicate.delivery/pbxt/quQ0c6uJrxJCABCFnweGXzcbM4cKQc6VlLyU3obc8pHiCwRJA/out-0.png",
-    #     "https://replicate.delivery/pbxt/AGzQ3pI4OxKYPJGE4SL0TJggbyYUwfvg4WcRPfD7YNPhfAHlA/out-0.png",
-    # ]
 
-    # for image in images:
-    #     image_URLs.append(image)
-
-
+# Returns all the image URLs
 def return_urls():
     global image_URLs
     final_image_list = image_URLs

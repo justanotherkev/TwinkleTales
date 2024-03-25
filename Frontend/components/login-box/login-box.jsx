@@ -2,7 +2,7 @@
 import { useRouter } from "next/navigation";
 import FormButton from "../form-button/form-button";
 import s from "./login-box.module.css";
-import { useAuth, useSignIn } from "@clerk/nextjs";
+import { useSignIn } from "@clerk/nextjs";
 import { useState } from "react";
 import Link from "next/link";
 
@@ -25,6 +25,7 @@ export default function LoginBox() {
 			return;
 		}
 
+		// Attempt to create the user
 		try {
 			const result = await signIn.create({
 				identifier: email,
@@ -59,8 +60,6 @@ export default function LoginBox() {
 
 				<form
 					onSubmit={handleSubmit}
-					// action="/submit"
-					// method="post"
 					className={s.form}
 				>
 					<div className={s.credentials_box}>
@@ -103,7 +102,3 @@ export default function LoginBox() {
 	}
 }
 
-// autofill ofr STT
-// upgrade to GPT 3.5
-//nltk psacy for prompt gen
-// use summariser

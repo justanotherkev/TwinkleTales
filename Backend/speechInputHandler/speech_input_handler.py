@@ -176,11 +176,11 @@ app.add_middleware(
     allow_headers=["*"],
 )
 
-
+# state to determine whether the speak() function should run
 class State(BaseModel):
     running: bool = false
 
-
+# Takes in a text and uses the ElevenLabs API to narrate
 def speak(text1):
     print("[speech_input_handler.py] - speak() running...")
     # print(text1)
@@ -204,7 +204,7 @@ def generate_narration_audio_file(text1, file_path):
         audio_file.write(tts)
 
 
-# calculates the timestamp beetween images
+# calculates the time duration of each image
 def duration_per_image(audio_file_path):
     with audioread.audio_open(audio_file_path) as f:
         duration_seconds = f.duration
@@ -217,7 +217,7 @@ answers = ["", "", "", "", ""]
 
 count = -1
 
-
+# Recognises speech and converts to text
 def speech_to_text():
     global count
     recognizer = stt.Recognizer()
@@ -227,6 +227,7 @@ def speech_to_text():
         audio = recognizer.listen(source)
         answer_raw = recognizer.recognize_google(audio)
         print("answer recieved")
+        # Throws an error if profanity is detected
         if answer_raw in profanity_stop_words:
             raise ValueError("Profanity detected in user input")
         answers[count] = answer_raw
@@ -251,12 +252,14 @@ error_questions = [
     "6. ErrorQuestion",
 ]
 
-
+# Prompts the user to answer questions
+# Returns the answers and upcoming question to the frontend
 def get_prompt():
-    count_break = 0
+    count_break = 0 # Used to prevent endless looping due to error
     global answers
     global count
     afterError = False
+    # Break loop if error occured 8 times
     while count_break < 8:
         count_break += 1
         try:
@@ -267,11 +270,8 @@ def get_prompt():
             if count == 0 and state:
                 if not afterError:
                     speak(questions[0])
-                    # print(questions[0])
 
                 speech_to_text()
-                # time.sleep(4)
-                # answers[0] = "David"
                 afterError = False
                 count = 1
                 questions[1] = (
@@ -283,11 +283,8 @@ def get_prompt():
             if count == 1 and state:
                 if not afterError:
                     speak(questions[1])
-                    # print(questions[1])
 
                 speech_to_text()
-                # time.sleep(4)
-                # answers[1] = "London"
                 afterError = False
                 count = 2
                 questions[2] = (
@@ -301,11 +298,8 @@ def get_prompt():
             if count == 2 and state:
                 if not afterError:
                     speak(questions[2])
-                    # print(questions[2])
 
                 speech_to_text()
-                # time.sleep(4)
-                # answers[2] = "Soccer"
                 afterError = False
                 count = 3
                 questions[3] = (
@@ -320,11 +314,8 @@ def get_prompt():
             if count == 3 and state:
                 if not afterError:
                     speak(questions[3])
-                    # print(questions[3])
 
                 speech_to_text()
-                # time.sleep(4)
-                # answers[3] = "in the park"
                 afterError = False
                 count = 4
                 questions[4] = f"What is the weather like in {answers[1].capitalize()}?"
@@ -336,11 +327,8 @@ def get_prompt():
             if count == 4 and state:
                 if not afterError:
                     speak(questions[4])
-                    # print(questions[4])
 
                 speech_to_text()
-                # time.sleep(4)
-                # answers[4] = "sunny"
                 afterError = False
                 count = -1
                 count_break = 0
@@ -357,21 +345,16 @@ def get_prompt():
                 "I'm sorry, I couldn't hear what you said. Please try again."
                 + error_questions[count]
             )
-            # print(
-            #     "I'm sorry, I couldn't hear what you said. Please try again."
-            #     + error_questions[count]
-            # )
-
 
 state = State()
 
-
+# Returns the output of get_prompt() to the frontend
 @app.get("/")
 def get_content():
     state.running = True
     return {"message": get_prompt()}
 
-
+# Resets the values of answers and count
 @app.get("/reset")
 def reset_content():
     global answers

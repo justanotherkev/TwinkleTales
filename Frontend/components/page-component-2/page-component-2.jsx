@@ -1,4 +1,3 @@
-import HeaderTitle from "../header-title/header-title.jsx";
 import s from "./page-component-2.module.css";
 import Image from "next/image";
 

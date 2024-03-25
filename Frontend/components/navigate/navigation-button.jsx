@@ -1,5 +1,3 @@
-// import Image from "next/image";
-// import s from "./page.module.css";
 "use client";
 import Link from "next/link";
 import React from "react";

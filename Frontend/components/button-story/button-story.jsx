@@ -11,6 +11,7 @@ export default function ButtonAction(props) {
 		resetServer();
 	}, []);
 
+	// Triggers the speech_prompt_handler.py file to reset it's variables
 	const resetServer = async () => {
 		try {
 			await fetch("http://localhost:8000/reset", {
@@ -31,6 +32,8 @@ export default function ButtonAction(props) {
 		let data;
 
 		try {
+			// Request sent to speech_prompt_handler.py six times
+			// Recieves a response each time containing the prompt and the answers
 			for (let i = -1; i < 5; i++) {
 				console.log("Calling: " + i);
 				const res = await fetch(endpoint, {
@@ -52,6 +55,8 @@ export default function ButtonAction(props) {
 			setButtonText("Tell me a story");
 		}
 
+		// Prevents goToStoryPage() from running if undefined values are involved
+		// Notifies user of an error on the frontend in the above case
 		if (data !== undefined) {
 			if (data.message[2] !== undefined) {
 				props.goToStoryPage(data.message[2]);
@@ -65,7 +70,6 @@ export default function ButtonAction(props) {
 			props.setPrompt("Oh no! Something went wrong. Please try again later");
 			setButtonText("Tell me a story");
 		}
-		// props.goToStoryPage(["Alice", "Dubai", "Figure skating", "school", "gloomy"]);
 	};
 
 	return (
