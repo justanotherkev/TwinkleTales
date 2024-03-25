@@ -1,15 +1,14 @@
-import re
 import os
 from fastapi import FastAPI
 from fastapi.middleware.cors import CORSMiddleware
 import elevenlabs
 import speech_recognition as stt
-import time
 import audioread
 from sympy import false
 from textblob import TextBlob
 from pydantic import BaseModel
 from dotenv import load_dotenv
+
 load_dotenv()
 
 
