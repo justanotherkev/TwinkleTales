@@ -7,18 +7,18 @@ AI story generator and Narrator that takes in speech input and creates a custom 
 
 ## Technologies used
 
-Frontend - Next JS
-Programming Language - Python
-Backend - Fast API
-DataBase -  MongoDB 
-Deployment - Vercel
+Frontend - Next JS,
+Programming Language - Python,
+Backend - Fast API,
+DataBase -  MongoDB, 
+Deployment - Vercel, 
 
 ## APIs Used
 
-Text to Speech - Eleven Labs API
-Speech to Text -  Eleven Labs API 
-Story Generation - OpenAI API
-Image Generation - Replicate API
+Text to Speech - Eleven Labs API, 
+Speech to Text -  Eleven Labs API, 
+Story Generation - OpenAI API, 
+Image Generation - Replicate API, 
 
 ## Libraries Used
 
