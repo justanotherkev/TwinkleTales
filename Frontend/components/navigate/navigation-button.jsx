@@ -3,7 +3,7 @@ import Link from "next/link";
 import React from "react";
 import s from "./navigate.module.css";
 
-export default function ButtonNavigation(props) {
+export default function NavigationButton(props) {
   return (
     <div>
       <div className={s.button}>

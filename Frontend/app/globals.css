@@ -20,7 +20,7 @@ body {
 	background-position: center;
 }
 
-/* @media (max-width: 710px) {
-	body {
-	}
-} */
+:root {
+	--white-background: rgba(255, 255, 255, 0.486);
+	--blur: blur(20px);
+}
