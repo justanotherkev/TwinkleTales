@@ -1,7 +1,9 @@
 .header_title {
 	/* border: green 1px solid; */
+	width: 90%;
 	margin: 0;
 	display: flex;
+	justify-content: center;
 	gap: 20px;
 	font-size: 120px;
 	font-family: "Rubik Bubbles", system-ui;
@@ -10,18 +12,20 @@
 }
 
 .header_title span {
+	/* border: #c9410c 1px solid; */
 	background-image: linear-gradient(to bottom, #fcf010, #c9410c);
 	background-clip: text;
 	color: transparent;
+	text-wrap: nowrap;
 }
 
-@media (max-width: 1130px) {
+@media (max-width: 1290px) {
 	.header_title {
 		font-size: 100px;
 	}
 }
 
-@media (max-width: 850px) {
+@media (max-width: 1080px) {
 	.header_title {
 		font-size: 70px;
 		display: flex;
@@ -32,10 +36,6 @@
 }
 
 @media (max-width: 455px) {
-	.get_started {
-		width: 90%;
-	}
-
 	.header_title {
 		font-size: 65px;
 	}
