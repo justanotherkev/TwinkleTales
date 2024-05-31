@@ -3,19 +3,25 @@
 import ButtonStory from "@/components/button-story/button-story";
 import PageComponent2 from "@/components/page-component-2/page-component-2.jsx";
 import s from "./page.module.css";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { useRouter } from "next/navigation";
 import React from "react";
-import { SignedIn, SignedOut, UserButton } from "@clerk/nextjs";
+import { SignedIn, UserButton } from "@clerk/nextjs";
 import Image from "next/image";
 
-export default function Prompt() {
+export default function Prompt({ searchParams }) {
+	const [theme, setTheme] = useState("");
 	const [prompt, setPrompt] = useState("");
 	const [answers, setAnswers] = useState("");
 	const [isError, setIsError] = useState(false);
 	const [showDisplay, setShowDisplay] = useState(false);
 	const [isHidden, setIsHidden] = useState(true);
 	const router = useRouter();
+
+	useEffect(() => {
+		setTheme(searchParams.theme);
+		console.log(searchParams.theme);
+	});
 
 	if (showDisplay) {
 		const promptDisplay = document.getElementById("prompt");
@@ -56,8 +62,6 @@ export default function Prompt() {
 				</div>
 			</SignedIn>
 
-			<SignedOut></SignedOut>
-
 			<div
 				className={s.tutorial_button}
 				onMouseEnter={handleHover}
@@ -65,10 +69,18 @@ export default function Prompt() {
 				onTouchStart={handleHover}
 				onTouchEnd={handleHover}
 			>
-				<Image className={s.question_mark} height={20} width={20} src="/question-mark.svg" alt="" />
+				<Image
+					className={s.question_mark}
+					height={20}
+					width={20}
+					src="/question-mark.svg"
+					alt=""
+				/>
 			</div>
 			<div className={`${s.tutorial_details} ${isHidden ? s.hidden : ""}`}>
-				1. Click the &quot;Tell me a story&quot; button
+				1. Click the &quot;Tell me a{" "}
+				{searchParams.theme.toLowerCase().replaceAll('"', "")} story&quot;
+				button
 				<br />
 				2. Wait for the prompt
 				<br />
@@ -82,12 +94,14 @@ export default function Prompt() {
 							{prompt}
 						</div>
 						<ButtonStory
+							buttonText={searchParams.theme}
 							setPrompt={setPrompt}
 							setAnswers={setAnswers}
 							setShowDisplay={setShowDisplay}
 							setIsError={setIsError}
 							goToStoryPage={goToStoryPage}
 						/>
+
 						<div className={s.answers} id="answers">
 							{answers}
 						</div>

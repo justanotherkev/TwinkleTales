@@ -3,18 +3,30 @@ import { useEffect, useState } from "react";
 import s from "./button-story.module.css";
 
 export default function ButtonAction(props) {
-	const [buttonText, setButtonText] = useState("Tell me a story");
+	const [buttonText, setButtonText] = useState("---");
+	const [theme, setTheme] = useState("");
+
 	const endpoint = "http://localhost:8000/";
 
 	useEffect(() => {
 		// speech_input_handler.py reset values
-		resetServer();
+		// resetServer();
+		setTheme(props.buttonText);
+		if (props.buttonText === '"Adventure"') {
+			setButtonText("Tell me an adventure story");
+		} else {
+			setButtonText(
+				"Tell me a " +
+					props.buttonText.toLowerCase().replaceAll('"', "") +
+					" story"
+			);
+		}
 	}, []);
 
 	// Triggers the speech_prompt_handler.py file to reset it's variables
 	const resetServer = async () => {
 		try {
-			await fetch("http://localhost:8000/reset", {
+			await fetch(endpoint + "reset", {
 				method: "GET",
 				headers: { "Content-Type": "application/json" },
 			});
@@ -36,7 +48,7 @@ export default function ButtonAction(props) {
 			// Recieves a response each time containing the prompt and the answers
 			for (let i = -1; i < 5; i++) {
 				console.log("Calling: " + i);
-				const res = await fetch(endpoint, {
+				const res = await fetch(endpoint + "ask_question/" + i, {
 					method: "GET",
 					headers: { "Content-Type": "application/json" },
 				});
@@ -52,7 +64,9 @@ export default function ButtonAction(props) {
 		} catch (error) {
 			props.setIsError(true);
 			props.setPrompt("Oh no! Something went wrong. Please try again later");
-			setButtonText("Tell me a story");
+			setButtonText(
+				"Tell me a " + theme.toLowerCase().replaceAll('"', "") + " story"
+			);
 		}
 
 		// Prevents goToStoryPage() from running if undefined values are involved
@@ -63,12 +77,21 @@ export default function ButtonAction(props) {
 			} else {
 				props.setIsError(true);
 				props.setPrompt("Oh no! Something went wrong. Please try again later");
-				setButtonText("Tell me a story");
+				setButtonText(
+					"Tell me a " + theme.toLowerCase().replaceAll('"', "") + " story"
+				);
 			}
 		} else {
 			props.setIsError(true);
 			props.setPrompt("Oh no! Something went wrong. Please try again later");
-			setButtonText("Tell me a story");
+
+			if (theme === '"Adventure"') {
+				setButtonText("Tell me an adventure story");
+			} else {
+				setButtonText(
+					"Tell me a " + theme.toLowerCase().replaceAll('"', "") + " story"
+				);
+			}
 		}
 	};
 

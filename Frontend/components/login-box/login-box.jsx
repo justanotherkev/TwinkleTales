@@ -35,7 +35,7 @@ export default function LoginBox() {
 			if (result.status === "complete") {
 				console.log(result);
 				await setActive({ session: result.createdSessionId });
-				router.push("/prompt");
+				router.push("/theme-selection");
 			} else {
 				console.log(result);
 			}
