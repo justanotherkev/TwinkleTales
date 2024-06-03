@@ -1,0 +1,22 @@
+.loading_bar {
+	position: relative;
+	height: 40px;
+	width: 350px;
+	border: black 1px solid;
+}
+
+.loading_bar p {
+	position: absolute;
+	margin: 0;
+	top: 0;
+	width: 100%;
+	text-align: center;
+	transform: translateY(50%);
+}
+
+.progress {
+	height: 100%;
+	width: 0%;
+	background: linear-gradient(to bottom, #fff863, #e45820);
+	transition: 0.5s;
+}
