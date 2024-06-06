@@ -39,8 +39,8 @@ export default function StoryGeneration({ searchParams }) {
 					setImageSourceList(data[0]);
 					setSelectedAudioUrl(data[1]);
 					setImageDuration(data[2]);
-					setPlayMusic(true);
-					setEnabled(true);
+					// setPlayMusic(true);
+					// setEnabled(true);
 					setNoStoryData(false);
 				} else {
 					setNoStoryData(true);
@@ -86,6 +86,7 @@ export default function StoryGeneration({ searchParams }) {
 						clearInterval(closingInterval);
 					}, 2000);
 				}
+				console.log("Final volume: " + backgroundMusic.volume);
 			}, imageDuration);
 		};
 
@@ -100,14 +101,22 @@ export default function StoryGeneration({ searchParams }) {
 			}
 		} else {
 			console.log("Stopping everything...");
-			backgroundMusic.pause();
-			narration.pause();
+			if (backgroundMusic && narration) {
+				backgroundMusic.pause();
+				narration.pause();
+			}
 		}
 	}, [playMusic, imageDuration, imageSourceList]);
 
 	//Navigates to the prompt page when New Story button is clicked.
 	const goToThemePage = () => {
 		router.push("/theme-selection");
+	};
+
+	const startStory = () => {
+		setPlayMusic(true);
+		setEnabled(true);
+		setNoStoryData(false);
 	};
 
 	if (noStoryData) {
@@ -133,15 +142,15 @@ export default function StoryGeneration({ searchParams }) {
 							setPlayMusic={setPlayMusic}
 							goToThemePage={goToThemePage}
 							enabled={enabled}
+							setEnabled={setEnabled}
 						/>
-
 						<audio
 							className="audio-player-styles"
 							id="background-music-player"
 							controls={false}
 							src={selectedAudioUrl}
 							autoPlay={false}
-							muted={true}
+							// muted={true}
 						/>
 
 						<audio
@@ -150,7 +159,7 @@ export default function StoryGeneration({ searchParams }) {
 							controls={false}
 							src={narrationPath}
 							autoPlay={false}
-							muted={true}
+							// muted={true}
 						/>
 					</>
 				}
