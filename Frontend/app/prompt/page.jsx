@@ -8,50 +8,96 @@ import { useRouter } from "next/navigation";
 import React from "react";
 import { SignedIn, UserButton } from "@clerk/nextjs";
 import Image from "next/image";
+import LoadingBar from "@/components/loading-bar/loading-bar";
 
 export default function Prompt({ searchParams }) {
-	const [theme, setTheme] = useState("");
 	const [prompt, setPrompt] = useState("");
 	const [answers, setAnswers] = useState("");
+	const [answersList, setAnswersList] = useState("");
 	const [isError, setIsError] = useState(false);
 	const [showDisplay, setShowDisplay] = useState(false);
 	const [isHidden, setIsHidden] = useState(true);
+	const [loadingComplete, setLoadingComplete] = useState(false);
 	const router = useRouter();
 
 	useEffect(() => {
-		setTheme(searchParams.theme);
-		console.log(searchParams.theme);
-	});
+		const loadingScreen = document.getElementById("loading_screen");
+		if (answersList == "") {
+			loadingScreen.style.display = "none";
+		} else {
+			loadingScreen.style.display = "flex";
 
-	if (showDisplay) {
+			const sendSpeechPrompts = async () => {
+				console.log("answersList: [" + answersList + "]");
+				try {
+					const res = await fetch(
+						"http://localhost:8001/" + searchParams.theme,
+						{
+							method: "POST",
+							headers: { "Content-Type": "application/json" },
+							body: JSON.stringify("[" + answersList + "]"),
+						}
+					);
+					console.log("Post request was sent");
+					setAnswersList("");
+					const data = await res.json();
+					console.log("Story status: " + data);
+					if (data == "done") {
+						setLoadingComplete(true);
+						console.log("Pushing to output");
+						window.location.href = "/story-generation";
+					}
+				} catch {
+					console.log("Something went wrong while sending the data.");
+					setIsError(true);
+					setPrompt("Oh no! Something went wrong. Please try again later");
+					setAnswersList("");
+				}
+			};
+
+			sendSpeechPrompts();
+		}
+	}, [answersList]);
+
+	useEffect(() => {
+		if (showDisplay) {
+			const promptDisplay = document.getElementById("prompt");
+			promptDisplay.style.maxHeight = "fit-content";
+			promptDisplay.style.padding = "25px 10px";
+			promptDisplay.style.color = "black";
+
+			const answersDisplay = document.getElementById("answers");
+			answersDisplay.style.maxHeight = "fit-content";
+			answersDisplay.style.padding = "25px 10px";
+			answersDisplay.style.color = "black";
+		} else {
+			const promptDisplay = document.getElementById("prompt");
+			promptDisplay.style.maxHeight = "0px";
+			promptDisplay.style.padding = "0px";
+			promptDisplay.style.color = "transparent";
+
+			const answersDisplay = document.getElementById("answers");
+			answersDisplay.style.maxHeight = "0px";
+			answersDisplay.style.padding = "0px";
+			answersDisplay.style.color = "transparent";
+		}
+	}, [showDisplay]);
+
+	if (isError) {
 		const promptDisplay = document.getElementById("prompt");
 		promptDisplay.style.maxHeight = "fit-content";
 		promptDisplay.style.padding = "25px 10px";
 		promptDisplay.style.color = "black";
 
 		const answersDisplay = document.getElementById("answers");
-		answersDisplay.style.maxHeight = "fit-content";
-		answersDisplay.style.padding = "25px 10px";
-		answersDisplay.style.color = "black";
-	}
-
-	if (isError) {
-		const answersDisplay = document.getElementById("answers");
 		answersDisplay.style.maxHeight = "0px";
 		answersDisplay.style.padding = "0px";
 		answersDisplay.style.color = "transparent";
 	}
 
-	const goToStoryPage = (answer_data) => {
-		console.log("Pushing to story output page");
-		router.push(
-			"/story-generation?data=" +
-				encodeURIComponent(JSON.stringify(answer_data))
-		);
-	};
 
 	const handleHover = () => {
-		setIsHidden(!isHidden); // Toggle isHidden state
+		setIsHidden(!isHidden);
 	};
 
 	return (
@@ -86,6 +132,22 @@ export default function Prompt({ searchParams }) {
 				<br />
 				3. Answer the question
 			</div>
+
+			<div className={s.loading_screen} id="loading_screen">
+				<h2>
+					Your story will be <br /> ready in a few minutes!
+				</h2>
+				<Image
+					className={s.loading_arrows}
+					src={"/loading-arrows.svg"}
+					alt={"Loading arrows"}
+					height={80}
+					width={80}
+				/>
+				<h3>Grab a snack while you wait</h3>
+				<LoadingBar startLoading={answersList != ""} loadingComplete={loadingComplete}/>
+			</div>
+
 			<PageComponent2
 				src={"/story-prompt-img.png"}
 				component={
@@ -97,14 +159,17 @@ export default function Prompt({ searchParams }) {
 							buttonText={searchParams.theme}
 							setPrompt={setPrompt}
 							setAnswers={setAnswers}
+							setAnswersList={setAnswersList}
 							setShowDisplay={setShowDisplay}
 							setIsError={setIsError}
-							goToStoryPage={goToStoryPage}
 						/>
 
 						<div className={s.answers} id="answers">
 							{answers}
 						</div>
+						{/* <p className={s.info}>
+							If you're in a noisy place, try going somewhere quieter
+						</p> */}
 					</div>
 				}
 			/>

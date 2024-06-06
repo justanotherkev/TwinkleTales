@@ -5,7 +5,7 @@ import s from "./back-button.module.css";
 export default function BackButton(props) {
 	const handleClick = () => {
 		props.setPlayMusic(false);
-		props.goToPromptPage();
+		props.goToThemePage();
 	};
 
 	if (props.enabled) {

@@ -12,58 +12,47 @@ export default function StoryGeneration({ searchParams }) {
 	const [currentImage, setCurrentImage] = useState();
 	const [end, setEnd] = useState(false);
 	const [error, setError] = useState(false);
-
 	const [enabled, setEnabled] = useState(false);
-
-	const [noParams, setNoParams] = useState(true);
-
 	const [playMusic, setPlayMusic] = useState(false);
 	const [selectedAudioUrl, setSelectedAudioUrl] = useState("");
 	const [imageDuration, setImageDuration] = useState();
+	const [noStoryData, setNoStoryData] = useState(true);
 	const router = useRouter();
 	const firstRender = useRef(true);
-	const [narrationPath, setNarrationPath] = useState("");
+	const narrationPath = "/narration_audio.mp3";
 
 	// Sends the speech prompts to the integration file upon a page load/reload
 	useEffect(() => {
 		// Sends prompts to integration.py
 		// Receives image URLs from integration.py
 		// Passes URLs to getNarration
-		const sendSpeechPrompts = async () => {
-			const answers = searchParams.data;
-			console.log("answers:" + answers);
+		const getStoryData = async () => {
 			try {
-				console.log("Sending the output page data");
+				console.log("Getting story items");
 				const res = await fetch("http://localhost:8001/", {
-					method: "POST",
+					method: "GET",
 					headers: { "Content-Type": "application/json" },
-					body: JSON.stringify(answers),
 				});
-				console.log("Post request was sent");
 				const data = await res.json();
-				console.log("Data received");
-				console.log(data.message);
-				console.log(data.message[0]);
-				console.log(data.message[1]);
-				console.log(data.message[2]);
-				setImageSourceList(data.message[0]);
-				setImageDuration(data.message[1]);
-				setSelectedAudioUrl(data.message[2]);
-				setNarrationPath("/narration_audio.mp3");
-				setPlayMusic(true);
-				setEnabled(true);
+				if (data.length != 0) {
+					console.log("Data received");
+					setImageSourceList(data[0]);
+					setSelectedAudioUrl(data[1]);
+					setImageDuration(data[2]);
+					setPlayMusic(true);
+					setEnabled(true);
+					setNoStoryData(false);
+				} else {
+					setNoStoryData(true);
+				}
 			} catch {
 				console.log("Something went wrong while sending the data.");
 				setError(true);
 				setEnabled(true);
 			}
 		};
-		if (searchParams.data !== undefined) {
-			sendSpeechPrompts();
-			setNoParams(false);
-			console.log("Got answers: " + searchParams.data);
-		}
-	}, [searchParams.data]);
+		getStoryData();
+	}, []);
 
 	// useEffect to be triggered only when the state changes
 	//Plays the music automatically
@@ -80,20 +69,6 @@ export default function StoryGeneration({ searchParams }) {
 			let i = 1;
 			console.log("Source list length: " + imageSourceList.length);
 			console.log("Image duration: " + imageDuration);
-
-			const fadeOutBackgroundMusic = () => {
-				const fadeInterval = setInterval(() => {
-					const currentVolume = backgroundMusic.volume;
-
-					const newVolume = currentVolume - 0.01;
-
-					backgroundMusic.volume = newVolume;
-
-					if (newVolume <= 0) {
-						clearInterval(fadeInterval);
-					}
-				}, 100);
-			};
 
 			//displays the first image immediatley
 			setCurrentImage(imageSourceList[0]);
@@ -112,15 +87,17 @@ export default function StoryGeneration({ searchParams }) {
 					}, 2000);
 				}
 			}, imageDuration);
-			console.log("Final volume: " + backgroundMusic.volume);
 		};
 
 		if (playMusic) {
 			console.log("Starting everything...");
 			showImages();
-			backgroundMusic.volume = 0.2;
-			backgroundMusic.play();
-			narration.play();
+			if (backgroundMusic && narration) {
+				console.log("Playing");
+				backgroundMusic.volume = 0.2;
+				backgroundMusic.play();
+				narration.play();
+			}
 		} else {
 			console.log("Stopping everything...");
 			backgroundMusic.pause();
@@ -129,18 +106,18 @@ export default function StoryGeneration({ searchParams }) {
 	}, [playMusic, imageDuration, imageSourceList]);
 
 	//Navigates to the prompt page when New Story button is clicked.
-	const goToPromptPage = () => {
-		router.push("/prompt");
+	const goToThemePage = () => {
+		router.push("/theme-selection");
 	};
 
-	if (noParams) {
+	if (noStoryData) {
 		return (
 			<PageComponent2
 				src={"/story-reading-img.png"}
 				component={
 					<>
 						<EmptyStoryBox />
-						<EmptyBackButton goToPromptPage={goToPromptPage} />
+						<EmptyBackButton goToThemePage={goToThemePage} />
 					</>
 				}
 			/>
@@ -154,7 +131,7 @@ export default function StoryGeneration({ searchParams }) {
 						<StoryImageBox src={currentImage} end={end} error={error} />
 						<BackButton
 							setPlayMusic={setPlayMusic}
-							goToPromptPage={goToPromptPage}
+							goToThemePage={goToThemePage}
 							enabled={enabled}
 						/>
 
@@ -164,6 +141,7 @@ export default function StoryGeneration({ searchParams }) {
 							controls={false}
 							src={selectedAudioUrl}
 							autoPlay={false}
+							muted={true}
 						/>
 
 						<audio
@@ -172,6 +150,7 @@ export default function StoryGeneration({ searchParams }) {
 							controls={false}
 							src={narrationPath}
 							autoPlay={false}
+							muted={true}
 						/>
 					</>
 				}

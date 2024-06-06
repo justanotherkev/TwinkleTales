@@ -16,21 +16,22 @@ export default function ThemeSelection() {
 		);
 	};
 
-	useEffect(() => {});
-
-	const adjustBackgroundNoise = async () => {
-		try {
-			const res = await fetch("http://localhost:8000/", {
-				method: "GET",
-				headers: { "Content-Type": "application/json" },
-			});
-			const data = await res.json();
+	useEffect(() => {
+		const adjustBackgroundNoise = async () => {
 			console.log("Adjusting for background noise");
-			console.log(data.message);
-		} catch (error) {
-			console.log("Something went wrong:\n" + error);
-		}
-	};
+			try {
+				const res = await fetch("http://localhost:8000/adjust_noise", {
+					method: "GET",
+					headers: { "Content-Type": "application/json" },
+				});
+				const data = await res.json();
+				console.log(data.message);
+			} catch (error) {
+				console.log("Something went wrong:\n" + error);
+			}
+		};
+		adjustBackgroundNoise();
+	});
 
 	// adjustBackgroundNoise()
 
@@ -44,7 +45,7 @@ export default function ThemeSelection() {
 			<HeaderTitle line1="Select your" line2="theme" />
 			<div className={s.theme_container}>
 				<ThemeCard
-					title="Super Hero"
+					title="Superhero"
 					subtitle="Join the brave heroes as they save the world from villains!"
 					src="/theme_bunny_superhero.png"
 					navigateToPrompt={navigateToPrompt}
@@ -71,7 +72,6 @@ export default function ThemeSelection() {
 					navigateToPrompt={navigateToPrompt}
 				/>
 			</div>
-			<button onClick={adjustBackgroundNoise}>adjust bg</button>
 		</div>
 	);
 }

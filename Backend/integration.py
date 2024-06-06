@@ -1,3 +1,5 @@
+# Run on PORT 8001
+
 import random
 from storyGenerator.story_gen import story_generator
 from storySummerizer.summerizer import story_summerizer
@@ -12,12 +14,12 @@ from speechInputHandler.speech_input_handler import duration_per_image
 from databaseAPI.database import list_serial
 
 
-story_app = FastAPI()
+app = FastAPI()
 
 origins = ["*"]
 
 
-story_app.add_middleware(
+app.add_middleware(
     CORSMiddleware,
     allow_origins=origins,
     allow_credentials=True,
@@ -27,19 +29,26 @@ story_app.add_middleware(
 
 load_dotenv()
 
-
-# Post method to recive the prompts for the story generation
-@story_app.post("/")
-async def start_content_generation(request: Request):
-    print("\n[integration.py] - start_content_generation() running...")
-    list_str = await request.json()
-    return {"message": set_output(list_str)}
+is_story_completed = False
+time_per_image = 0
+images = []
+randomUrl = ""
 
 
 # Inside this function all the functions nessersary for story gen, image gen and
-def set_output(speech_inputs):
+def set_output(theme: str, speech_inputs):
 
-    story = story_generator(speech_inputs)
+    global time_per_image
+    global images
+    global randomUrl
+    global is_story_completed
+
+    theme = theme.replace('"', "")
+    print("\n[integration.py] - Theme: ", theme)
+    print("\n[integration.py] - Speech inputs: ", speech_inputs)
+
+    story = story_generator(theme, speech_inputs)
+    # story = "Once upon a time, there was a boy named testinputs. He was very happy and he lived happily ever after."
 
     audio_file_path = "../Frontend/public/narration_audio.mp3"
 
@@ -68,10 +77,12 @@ def set_output(speech_inputs):
     images = return_urls()
     # print("\n[integration.py] - Received images", images)
 
-    # retrieves a link to a random audio file in MongoDB to play in the background 
+    # retrieves a link to a random audio file in MongoDB to play in the background
     randomUrl = get_random_audio_url()
 
-    return [images, time_per_image, randomUrl]
+    is_story_completed = True
+    return "done"
+
 
 # Determines a random URL from the list of URLs in MongoDB
 def get_random_audio_url():
@@ -84,3 +95,19 @@ def get_random_audio_url():
         return randomdict["audio_url"]
     else:
         print("No audio files found")
+
+
+# Post method to recive the prompts for the story generation
+@app.post("/{theme}")
+async def start_content_generation(theme: str, request: Request):
+    print("\n[integration.py] - start_content_generation() running...")
+    list_str = await request.json()
+    return set_output(theme, list_str)
+
+
+@app.get("/")
+async def play_story():
+    if is_story_completed:
+        return [images, randomUrl, time_per_image]
+    else:
+        return []

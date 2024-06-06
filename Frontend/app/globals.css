@@ -22,5 +22,5 @@ body {
 
 :root {
 	--white-background: rgba(255, 255, 255, 0.486);
-	--blur: blur(20px);
+	--blur: blur(15px);
 }

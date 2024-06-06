@@ -27,6 +27,20 @@
 	box-shadow: black 1px 1px 2px;
 }
 
+.link_button_disabled {
+	cursor: not-allowed;
+	display: flex;
+	flex-direction: column;
+	justify-content: center;
+	align-items: center;
+	height: 120px;
+	width: 325px;
+	border-radius: 30px;
+	box-shadow: black 3px 7px 12px;
+	background: linear-gradient(to bottom, #f6f6f6, #6c6c6c);
+	transition: 0.2s;
+}
+
 @media (max-width: 455px) {
 	.link_button {
 		width: 285px;

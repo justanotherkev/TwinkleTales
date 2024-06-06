@@ -3,7 +3,7 @@ import s from "./empty-back-button.module.css";
 
 export default function EmptyBackButton(props) {
 	const handleClick = () => {
-		props.goToPromptPage();
+		props.goToThemePage();
 	};
 
 	return (
