@@ -28,14 +28,14 @@ export default function Prompt({ searchParams }) {
 			loadingScreen.style.display = "flex";
 
 			const sendSpeechPrompts = async () => {
-				console.log("answersList: [" + answersList + "]");
+				console.log("answersList: " + answersList);
 				try {
 					const res = await fetch(
 						"http://localhost:8001/" + searchParams.theme,
 						{
 							method: "POST",
 							headers: { "Content-Type": "application/json" },
-							body: JSON.stringify("[" + answersList + "]"),
+							body: JSON.stringify(answersList),
 						}
 					);
 					console.log("Post request was sent");
@@ -44,7 +44,6 @@ export default function Prompt({ searchParams }) {
 					console.log("Story status: " + data);
 					if (data == "done") {
 						setLoadingComplete(true);
-						console.log("Pushing to output");
 						window.location.href = "/story-generation";
 					}
 				} catch {
@@ -95,7 +94,6 @@ export default function Prompt({ searchParams }) {
 		answersDisplay.style.color = "transparent";
 	}
 
-
 	const handleHover = () => {
 		setIsHidden(!isHidden);
 	};
@@ -145,7 +143,10 @@ export default function Prompt({ searchParams }) {
 					width={80}
 				/>
 				<h3>Grab a snack while you wait</h3>
-				<LoadingBar startLoading={answersList != ""} loadingComplete={loadingComplete}/>
+				<LoadingBar
+					startLoading={answersList != ""}
+					loadingComplete={loadingComplete}
+				/>
 			</div>
 
 			<PageComponent2

@@ -12,8 +12,8 @@ def story_generator(theme, story_data):
     print(type(story_data))
     print(story_data)
 
-    # story_data_list = ast.literal_eval(story_data)
-    story_data_list = ["Drax", "laser", "boho", "hydrogen", "miami"]
+    story_data_list = ast.literal_eval(story_data)
+    # story_data_list = ["Drax", "laser", "boho", "hydrogen", "miami"]
 
     client = OpenAI(api_key=os.getenv("OPENAI_API_KEY"))
 
@@ -31,7 +31,7 @@ def story_generator(theme, story_data):
 
     elif theme.lower() == "fairy tale":
         print(theme.lower() + " theme selected")
-        prompt = f"Write a short fairy tale suitable for children aged 4 to 7 about a character named {story_data_list[0]} who lives in {story_data_list[1]}. One day, {story_data_list[0]} discovers a magical creature, a {story_data_list[2]}, in {story_data_list[1]}. Together with their loyal companion, a {story_data_list[3]}, {story_data_list[0]} sets out on an epic quest to {story_data_list[4]}. The story should include magical adventures, enchanting discoveries, and a moral value teaching the importance of kindness, teamwork, and perseverance."
+        prompt = f"Write a short fairy tale suitable for children aged 4 to 7 about a character ({story_data_list[0]}) who lives in {story_data_list[1]}. One day, {story_data_list[0]} discovers a magical creature, a {story_data_list[2]}, in {story_data_list[1]}. Together with their loyal companion, a {story_data_list[3]}, {story_data_list[0]} sets out on an epic quest to {story_data_list[4]}. The story should include magical adventures, enchanting discoveries, and a moral value teaching the importance of kindness, teamwork, and perseverance."
 
     elif theme.lower() == "sports":
         print(theme.lower() + " theme selected")
@@ -48,4 +48,3 @@ def story_generator(theme, story_data):
     print("\n\nSTORY:\n" + story)
 
     return story
-
