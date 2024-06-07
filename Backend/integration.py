@@ -1,12 +1,13 @@
 # Run on PORT 8001
 
+from databaseAPI.database import collections
 import random
 from storyGenerator.story_gen import story_generator
 from storySummerizer.summerizer import story_summerizer
 from imageGenerator.image_gen import generate_images
 from imageGenerator.image_gen import return_urls
 from speechInputHandler.speech_input_handler import generate_narration_audio_file
-from fastapi import FastAPI, Request
+from fastapi import FastAPI, HTTPException, Request
 from fastapi.middleware.cors import CORSMiddleware
 from dotenv import load_dotenv
 from speechInputHandler.speech_input_handler import generate_narration_audio_file
@@ -43,7 +44,7 @@ def set_output(theme: str, speech_inputs):
     global randomUrl
     global is_story_completed
 
-    theme = theme.replace('"', "")
+    theme = theme.replace('"', "").lower()
     print("\n[integration.py] - Theme: ", theme)
     print("\n[integration.py] - Speech inputs: ", speech_inputs)
 
@@ -78,15 +79,19 @@ def set_output(theme: str, speech_inputs):
     # print("\n[integration.py] - Received images", images)
 
     # retrieves a link to a random audio file in MongoDB to play in the background
-    randomUrl = get_random_audio_url()
+    randomUrl = get_random_audio_url(theme)
 
     is_story_completed = True
     return "done"
 
 
-# Determines a random URL from the list of URLs in MongoDB
-def get_random_audio_url():
-    all_audio_urls = list_serial()
+# Determines a random URL from the list of URLs in MongoDB based on the theme
+def get_random_audio_url(theme: str):
+    if theme not in collections.keys():
+        raise HTTPException(status_code=404, detail="Theme not found")
+    
+    collection = collections[theme]
+    all_audio_urls = list_serial(collection)
 
     print("The audio URLs being fetched from the DB: ", all_audio_urls)
     if len(all_audio_urls) > 0:
@@ -95,7 +100,6 @@ def get_random_audio_url():
         return randomdict["audio_url"]
     else:
         print("No audio files found")
-
 
 # Post method to recive the prompts for the story generation
 @app.post("/{theme}")
