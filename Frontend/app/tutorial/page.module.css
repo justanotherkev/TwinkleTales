@@ -7,7 +7,7 @@
 
 .subtitle {
 	font-size: 35px;
-  font-weight: 500;
+	font-weight: 500;
 }
 
 .tutorial_box {
@@ -22,6 +22,7 @@
 	display: flex;
 	flex-direction: column;
 	align-items: center;
+	justify-content: center;
 	text-align: center;
 
 	background-color: var(--white-background);

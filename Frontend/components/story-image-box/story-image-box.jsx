@@ -29,16 +29,10 @@ export default function StoryImageBox(props) {
 							</h2>
 						) : (
 							<>
-								<h2 className={s.title}>
-									Your story will be <br /> ready in a few minutes!
-								</h2>
-								<Image
-									className={s.loading_arrows}
-									src={"/loading-arrows.svg"}
-									alt={"Loading arrows"}
-									height={80}
-									width={80}
-								/>
+								<h2 className={s.title}>Your story is ready!</h2>
+								<p className={s.subtitle}>
+									Press the button below when you're ready
+								</p>
 							</>
 						)}
 					</>

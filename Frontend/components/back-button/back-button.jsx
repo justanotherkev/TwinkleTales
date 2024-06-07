@@ -8,6 +8,11 @@ export default function BackButton(props) {
 		props.goToThemePage();
 	};
 
+	const playStory = () => {
+		props.setPlayMusic(true);
+		props.setEnabled(true);
+	};
+
 	if (props.enabled) {
 		return (
 			<button type="button" onClick={handleClick} className={s.link}>
@@ -16,11 +21,8 @@ export default function BackButton(props) {
 		);
 	} else {
 		return (
-			<button type="button" className={s.link}>
-				<div className={s.link_button}>
-					Creating your <br />
-					story...
-				</div>
+			<button type="button" className={s.link} onClick={playStory}>
+				<div className={s.enabled_link_button}>Play story</div>
 			</button>
 		);
 	}

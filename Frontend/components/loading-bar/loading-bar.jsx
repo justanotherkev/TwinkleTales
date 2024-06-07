@@ -9,9 +9,8 @@ export default function LoadingBar(props) {
 		if (props.loadingComplete) {
 			progress.style.width = "100%";
 			percent.innerHTML = "100%";
-		}
-
-		if (progress && percent && props.startLoading && !props.loadingComplete) {
+		} else if (progress && percent && props.startLoading) {
+			progress.style.width = "0%";
 			let currentWidth = 0.0;
 
 			const interval = setInterval(() => {
@@ -23,9 +22,9 @@ export default function LoadingBar(props) {
 				if (currentWidth >= 98.31) {
 					clearInterval(interval);
 				}
-			}, 100);
+			}, 200);
 		}
-	}, [props.loadingComplete]);
+	}, [props.loadingComplete, props.startLoading]);
 
 	return (
 		<div className={s.loading_bar}>

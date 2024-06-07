@@ -304,35 +304,31 @@ def question_list_selector(theme: str, answers_list: list):
 # Takes in a text and uses the ElevenLabs API to narrate
 def speak(text):
     if not stop_app:
-        # print("[speech_input_handler.py] - speak() running...")
-        # tts = elevenlabs.generate(
-        #     text=text,
-        #     voice="Charlotte",
-        #     api_key=os.getenv("ELEVEN_LABS_API"),  # NEW API KEY
-        # )
-        # elevenlabs.play(tts)
-        print(text)
+        print("[speech_input_handler.py] - speak() running...")
+        tts = elevenlabs.generate(
+            text=text,
+            voice="Charlotte",
+            api_key=os.getenv("ELEVEN_LABS_API"),  # NEW API KEY
+        )
+        elevenlabs.play(tts)
+        # print(text)
 
 
 # Recognises speech and converts to text
 def speech_to_text(theme: str, count: int):
     global answers_list
 
-    print("Recognizer properties:")
-    for key, value in recognizer.__dict__.items():
-        print(f"{key}: {value}")
-    print("\n")
+    print(f"Energy threshold: {recognizer.energy_threshold} \n\n")
 
     if not stop_app:
 
         with stt.Microphone() as source:
             while not stop_app:
                 try:
+                    recognizer.adjust_for_ambient_noise(source, duration=2)
                     print("speak now")
-                    recognizer.adjust_for_ambient_noise(source, duration=0.2)
                     audio = recognizer.listen(source)
                     answer_raw = recognizer.recognize_google(audio)
-                    # answer_raw = input(">>> ")
                     # Use only the first noun
                     # answer_raw = extract_nouns(answer_raw)[0]
 
@@ -386,7 +382,7 @@ def ask_question(theme: str, question_number: int):
                     "Creating your story...",
                     "Your last answer: "
                     + answers_list[question_number - 1].capitalize(),
-                    answers_list,
+                    str(list(answers_list)).replace("'", "\""),
                 ]
 
 
