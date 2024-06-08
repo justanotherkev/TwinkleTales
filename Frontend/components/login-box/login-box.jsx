@@ -35,7 +35,7 @@ export default function LoginBox() {
 			if (result.status === "complete") {
 				console.log(result);
 				await setActive({ session: result.createdSessionId });
-				router.push("/theme-selection");
+				router.push("/tutorial");
 			} else {
 				console.log(result);
 			}
@@ -58,10 +58,7 @@ export default function LoginBox() {
 			<div className={s.login_box}>
 				<h2 className={s.title}>Login</h2>
 
-				<form
-					onSubmit={handleSubmit}
-					className={s.form}
-				>
+				<form onSubmit={handleSubmit} className={s.form}>
 					<div className={s.credentials_box}>
 						<div className={s.credential_detail}>
 							<label for="email">Email</label>
@@ -101,4 +98,3 @@ export default function LoginBox() {
 		);
 	}
 }
-

@@ -5,7 +5,7 @@ export default authMiddleware({
 	publicRoutes: ["/", "/login", "/sign-up"],
 
 	// Use for development
-	// publicRoutes: ["/", "/login", "/sign-up", "/prompt", "/story-generation", "/theme-selection"],
+	// publicRoutes: ["/", "/login", "/sign-up", "/prompt", "/story-generation", "/theme-selection", "/tutorial"],
 });
 
 export const config = {

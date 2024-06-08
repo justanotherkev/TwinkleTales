@@ -9,7 +9,7 @@ export default function Home() {
 	const router = useRouter();
 	const user = useUser();
 	if (user.isSignedIn) {
-		router.push("/theme-selection");
+		router.push("/tutorial");
 	}
 
 	return (

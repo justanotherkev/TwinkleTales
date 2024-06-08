@@ -7,7 +7,7 @@ export default function SignUp() {
   const router = useRouter();
 
   const handleRouting = () => {
-    router.push("/theme-selection");
+    router.push("/tutorial");
   };
 
   return (

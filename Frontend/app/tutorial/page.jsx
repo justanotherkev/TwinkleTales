@@ -1,8 +1,14 @@
+"use client";
+
 import React from "react";
 import s from "./page.module.css";
 import HeaderTitle from "@/components/header-title/header-title";
 
 export default function Tutorial() {
+	const handleClick = () => {
+		window.location.href = "/theme-selection";
+	};
+
 	return (
 		<div className={s.tutorial_page}>
 			<HeaderTitle line1="How to" line2="use" />
@@ -23,6 +29,10 @@ export default function Tutorial() {
 					<p>Relax and enjoy the story</p>
 				</div>
 			</div>
+
+			<button type="button" onClick={handleClick} className={s.link}>
+				<div className={s.start_button}>Let's Start</div>
+			</button>
 		</div>
 	);
 }

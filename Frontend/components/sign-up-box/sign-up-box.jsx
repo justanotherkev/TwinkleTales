@@ -76,8 +76,8 @@ export default function SignUpBox() {
 			if (completeSignUp.status === "complete") {
 				console.log("Signup completed");
 				await setActive({ session: completeSignUp.createdSessionId });
-				console.log("Pushing route /theme-selection");
-				router.push("/theme-selection");
+				console.log("Pushing route /tutorial");
+				router.push("/tutorial");
 			}
 		} catch (error) {
 			console.log(JSON.stringify(error, null, 2));
